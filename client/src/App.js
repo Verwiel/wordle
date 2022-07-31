@@ -1,9 +1,13 @@
+import { Route, Routes } from 'react-router-dom'
+import Homepage from './pages/Homepage'
+import WordleLanding from './pages/WordleLanding'
 
 function App() {
   return (
-    <div className="App">
-      <h1>Hello World</h1>
-    </div>
+    <Routes>
+      <Route path='/' element={<Homepage/>}/>
+      <Route path='/wordle' element={<WordleLanding/>}/>
+    </Routes>
   )
 }
 
