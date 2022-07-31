@@ -1,9 +1,9 @@
 import React from 'react'
 
-const WordRow = () => {
+const BoardRow = () => {
   return (
     <div>WordRow</div>
   )
 }
 
-export default WordRow
+export default BoardRow
