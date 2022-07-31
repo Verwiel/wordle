@@ -18,13 +18,8 @@ const Homepage = () => {
   // fetchRandomWord()
 
   return (
-    <main>
-      <header>
-        <h1>Homepage</h1>
-      </header>
-
+    <main className='homepage'>
       <Board />
-
       <Keyboard />
     </main>
   )

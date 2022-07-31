@@ -1,7 +1,14 @@
+import Tile from './Tile'
 
 const BoardRow = () => {
   return (
-    <div>Board Row</div>
+    <div className='board-row'>
+      <Tile />
+      <Tile />
+      <Tile />
+      <Tile />
+      <Tile />
+    </div>
   )
 }
 
