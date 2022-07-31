@@ -1,9 +1,10 @@
+import { useState } from 'react'
 import axios from 'axios'
 import Board from '../components/Board'
 import Keyboard from '../components/Keyboard'
 
 const Homepage = () => {
-
+  const [guessedWords, setGuessedWords] = useState(['CHECK'])
   // once a word is guessed, bounce animation then pop up statistics modal
   
   const fetchRandomWord = async () => {
@@ -17,10 +18,13 @@ const Homepage = () => {
 
   // fetchRandomWord()
 
+  const randomWord = 'STEIN'
+  // const gameOver = guessedWord === randomWord
+
   return (
     <main className='homepage'>
-      <Board />
-      <Keyboard />
+      <Board randomWord={randomWord} guessedWords={guessedWords} />
+      <Keyboard randomWord={randomWord} />
     </main>
   )
 }
