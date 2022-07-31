@@ -1,27 +1,33 @@
-import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons'
 
 const Keyboard = () => {
-  const keyboardKeys = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',
-    'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 
-    'ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '(backspace icon)']
+  const keyboardKeys = [['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+    ['', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ''], 
+    ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', <FontAwesomeIcon icon={faDeleteLeft} />]]
 
-  const keyboardRowOne = "i 0 - 9"
-  const keyboardRowTwo = "i 10 - 18"
-  const keyboardRowThree = "remaining"
-
+  const keyboardMap = keyboardKeys.map((row, i) => (
+    <div key={i} className='keyboard-row'>
+      {row.map((letter, i) => {
+        if(letter !== ''){
+          return (
+            <button key={letter}>
+              {letter}
+            </button>
+          )
+        } else {
+          return (
+            <div className='keyboard-spacer' key={`spacer-${i}`}></div>
+          )
+        }
+      })}
+    </div>
+  ))
 
   return (
-    <div>
-      <span>
-        {/* Map */}
-      </span>
-      <span>
-        {/* Map */}
-      </span>
-      <span>
-        {/* Map */}
-      </span>
-    </div>
+    <section className='keyboard'>
+      {keyboardMap}
+    </section>
   )
 }
 

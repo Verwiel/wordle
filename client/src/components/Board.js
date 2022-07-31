@@ -1,7 +1,7 @@
 
 const Board = () => {
   return (
-    <div>WordList</div>
+    <div>Board</div>
   )
 }
 

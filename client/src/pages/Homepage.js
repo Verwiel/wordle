@@ -1,4 +1,6 @@
 import axios from 'axios'
+import Board from '../components/Board'
+import Keyboard from '../components/Keyboard'
 
 const Homepage = () => {
 
@@ -20,6 +22,10 @@ const Homepage = () => {
       <header>
         <h1>Homepage</h1>
       </header>
+
+      <Board />
+
+      <Keyboard />
     </main>
   )
 }

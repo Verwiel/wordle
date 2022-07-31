@@ -1,0 +1,35 @@
+.keyboard {
+  margin: 0 8px;
+  &-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto 8px;
+    touch-action: manipulation;
+  }
+  &-spacer {
+    flex: 0.5;
+  }
+  button {
+    font-family: inherit;
+    font-weight: bold;
+    border: 0;
+    padding: 2px;
+    margin: 0 3px;
+    height: 58px;
+    border-radius: 4px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    // background-color: var(--key-bg);
+    // color: var(--key-text-color);
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
+  }
+}

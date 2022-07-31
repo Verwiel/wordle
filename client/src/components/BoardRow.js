@@ -1,8 +1,7 @@
-import React from 'react'
 
 const BoardRow = () => {
   return (
-    <div>WordRow</div>
+    <div>Board Row</div>
   )
 }
 
