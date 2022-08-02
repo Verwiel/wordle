@@ -1,0 +1,22 @@
+.rounded-button {
+  background-color: $white;
+  color: $black;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  border: 1px solid $black;
+  border-radius: 55px;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  padding: 10px 20px;
+  transition: all .5s;
+  cursor: pointer;
+
+  &:hover {
+    color: $white;
+    background-color: $black;
+    border: 1px solid $white;
+  }
+}

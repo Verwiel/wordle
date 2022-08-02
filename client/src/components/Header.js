@@ -9,7 +9,7 @@ const Header = () => {
         <FontAwesomeIcon icon={faUser} />
       </button>
 
-      <h1 className='main-header-text'>Wordle</h1>
+      <h1 className='main-header-text'>Wordle Clone</h1>
       {/* All buttons open a modal */}
       <span className='main-header-options'>
         <button>

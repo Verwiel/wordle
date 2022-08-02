@@ -2,7 +2,9 @@
 @import './base/typography.scss';
 @import './base/base.scss';
 @import './pages/homepage.scss';
-@import './components/header.scss';
+@import './layout/header.scss';
 @import './components/board.scss';
+@import './components/buttons.scss';
+@import './components/gameover-panel.scss';
 @import './components/keyboard.scss';
-@import './components/letter-validation.scss'
+@import './components/letter-validation.scss';

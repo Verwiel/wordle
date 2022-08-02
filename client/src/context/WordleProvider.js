@@ -16,6 +16,7 @@ export const WordleProvider = ({ children }) => {
   const [guessedWords, setGuessedWords] = useState(initialGuessedWordsArray)
   const [wordEvaluations, setWordEvaluations] = useState([])
   const [currentWordIndex, setCurrentWordIndex] = useState(guessedWords.indexOf(''))
+  const [showingGameOver, setShowingGameOver] = useState(false)
 
   // const fetchRandomWord = async () => {
     // try {
@@ -77,6 +78,7 @@ export const WordleProvider = ({ children }) => {
       evaluations.push(Array(wordLength).fill('correct'))
       setWordEvaluations(evaluations)
       setGameStatus("COMPLETE")
+      setShowingGameOver(true)
     } else {
       let baseEvaluations = Array(wordLength).fill('absent')
       let sharedLetters = guessedWordArray.filter(letter => randomWordArray.includes(letter));
@@ -137,12 +139,14 @@ export const WordleProvider = ({ children }) => {
       // End the game if the max number of guesses has been reached
       if(currentWordIndex + 1 === numberOfGuesses){
         setGameStatus("FINISHED")
+        setShowingGameOver(true)
       }
     }
   }
 
   return (
     <wordleContext.Provider value={{
+      showingGameOver,
       numberOfGuesses,
       wordLength,
       currentWordIndex,

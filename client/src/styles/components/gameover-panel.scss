@@ -1,0 +1,22 @@
+.gameover-panel {
+  margin: 0 8px;
+  width: calc(100% - 16px);
+  height: $keyboard-height;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  h2 {
+    margin: 0;
+    font-size: 20px;
+  }
+  p {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+  button {
+    margin-bottom: 5px;
+  }
+}
