@@ -7,22 +7,57 @@ export const useWordleCtx = () => useContext(wordleContext)
 
 
 export const WordleProvider = ({ children }) => {
+  const initialKeyboardKeys = [
+    {letter: 'Q', status: '', row: 0}, {letter: 'W', status: '', row: 0}, {letter: 'E', status: '', row: 0}, {letter: 'R', status: '', row: 0}, {letter: 'T', status: '', row: 0}, {letter: 'Y', status: '', row: 0}, {letter: 'U', status: '', row: 0}, {letter: 'I', status: '', row: 0}, {letter: 'O', status: '', row: 0}, {letter: 'P', status: '', row: 0},
+    {letter: '', status: '', row: 1}, {letter: 'A', status: '', row: 1}, {letter: 'S',  status: '', row: 1}, {letter: 'D', status: '', row: 1}, {letter: 'F', status: '', row: 1}, {letter: 'G', status: '', row: 1}, {letter: 'H', status: '', row: 1}, {letter: 'J', status: '', row: 1}, {letter: 'K', status: '', row: 1}, {letter: 'L', status: '', row: 1}, {letter: '', status: '', row: 1},
+    {letter: 'ENTER', status: '', row: 2}, {letter: 'Z', status: '', row: 2}, {letter: 'X', status: '', row: 2}, {letter: 'C', status: '', row: 2}, {letter: 'V', status: '', row: 2}, {letter: 'B', status: '', row: 2}, {letter: 'N', status: '', row: 2}, {letter: 'M', status: '', row: 2}, {letter: 'DELETE', status: '', row: 2}
+  ]
+
   const numberOfGuesses = 6
   let initialGuessedWordsArray = Array(numberOfGuesses).fill('')
   const wordLength = 5
   const [gameStatus, setGameStatus] = useState("IN PROGRESS")
   const [randomWord, setRandomWord] = useState('STEEP')
+  const [wordDescription, setWordDescription] = useState('test')
   const [keyboardValue, setKeyboardValue] = useState([])
   const [guessedWords, setGuessedWords] = useState(initialGuessedWordsArray)
   const [wordEvaluations, setWordEvaluations] = useState([])
   const [currentWordIndex, setCurrentWordIndex] = useState(guessedWords.indexOf(''))
   const [showingGameOver, setShowingGameOver] = useState(false)
+  const [keyboardKeys, setKeyboardKeys] = useState(initialKeyboardKeys)
+  // correct, absent, present, or blank
+
+
+  const markKeyboardKey = (guessedWordArray) => {
+    guessedWordArray.forEach((letter, i) => {
+      let updatedKeys = keyboardKeys.map(key => {
+        if(key.letter === letter){
+          let lettersIndex = randomWord.indexOf(key.letter)
+          // no need to update if its already correct
+          if(key.status === '' || key.status === 'present'){
+  
+            if(guessedWordArray[lettersIndex] === letter){
+              key.status = 'correct'
+            } else if(randomWord.includes(letter)) {
+              key.status = 'present'
+            } else {
+              key.status = 'absent'
+            }
+          }
+        }
+        return key
+      })
+  
+      setKeyboardKeys(updatedKeys)
+    })
+  }
 
   // const fetchRandomWord = async () => {
     // try {
     //   let res = await axios.get(`http://api.wordnik.com/v4/words.json/randomWord?api_key=${process.env.REACT_APP_WORDNIK_API_KEY}`)
     //   console.log(res)
     //   // setRandomWord('')
+    //   // setWordDescription('')
     // } catch(err) {
     //   console.log(err)
     // }
@@ -93,9 +128,13 @@ export const WordleProvider = ({ children }) => {
         return indexes
       }
 
+      markKeyboardKey(guessedWordArray)
+
       uniqueSharedLetters.forEach(letter => {
         let actualIndexes = getAllIndexes(randomWordArray, letter);
         let guessIndexes = getAllIndexes(guessedWordArray, letter);
+
+        // set keyboard validation
 
         if(guessIndexes.length > 1 && actualIndexes.length > 1){
           // you guessed multiple and there are multiple: 
@@ -146,6 +185,8 @@ export const WordleProvider = ({ children }) => {
 
   return (
     <wordleContext.Provider value={{
+      keyboardKeys,
+      wordDescription,
       showingGameOver,
       numberOfGuesses,
       wordLength,

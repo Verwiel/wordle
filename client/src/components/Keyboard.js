@@ -4,44 +4,50 @@ import { useWordleCtx } from '../context/WordleProvider'
 
 
 const Keyboard = () => {
-  const { addLetter, removeLetter, guessWord, showingGameOver } = useWordleCtx()
+  const { addLetter, removeLetter, guessWord, showingGameOver, keyboardKeys } = useWordleCtx()
 
-  const keyboardKeys = [['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
-    ['', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ''], 
-    ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'DELETE']]
+  // const allGuessedWords = guessedWords.flat()
+  let keyboardRow1 = keyboardKeys.filter(key => key.row === 0)
+  let keyboardRow2 = keyboardKeys.filter(key => key.row === 1)
+  let keyboardRow3 = keyboardKeys.filter(key => key.row === 2)
 
-  const keyboardMap = keyboardKeys.map((row, i) => (
-    <div key={i} className='keyboard-row'>
-      {row.map((letter, i) => {
-        let letterValue = letter === 'DELETE' ? <FontAwesomeIcon icon={faDeleteLeft} /> : letter
-        
-        if(letter !== ''){
-          return (
-            <button 
-              key={letter} 
-              disabled={showingGameOver} 
-              onClick={
-                letter === 'ENTER' ?
-                guessWord : letter === 'DELETE' ?
-                removeLetter :
-                (e) => addLetter(e, letter)
-              }
-            >
-              {letterValue}
-            </button>
-          )
-        } else {
-          return (
-            <div className='keyboard-spacer' key={`spacer-${i}`}></div>
-          )
-        }
-      })}
-    </div>
-  ))
+  const keyboardMap = (data) => data.map((letter, i) => {
+    let letterValue = letter.letter === 'DELETE' ? <FontAwesomeIcon icon={faDeleteLeft} /> : letter.letter
 
+    if(letter.letter !== ''){
+      return (
+        <button 
+          key={letter.letter} 
+          disabled={showingGameOver} 
+          onClick={
+            letter.letter === 'ENTER' ?
+            guessWord : letter.letter === 'DELETE' ?
+            removeLetter :
+            (e) => addLetter(e, letter.letter)
+          }
+          className={letter.status}
+        >
+          {letterValue}
+        </button>
+      )
+    } else {
+      return (
+        <div className='keyboard-spacer' key={`spacer-${i}`}></div>
+      )
+    }
+  })
+  
   return (
     <form className='keyboard'>
-      {keyboardMap}
+      <div className='keyboard-row'>
+        {keyboardMap(keyboardRow1)}
+      </div>
+      <div className='keyboard-row'>
+        {keyboardMap(keyboardRow2)}
+      </div>
+      <div className='keyboard-row'>
+        {keyboardMap(keyboardRow3)}
+      </div>
     </form>
   )
 }
