@@ -6,13 +6,14 @@ const wordleContext = createContext()
 export const useWordleCtx = () => useContext(wordleContext)
 
 
-export const WordleProvider = ({children, init}) => {
+export const WordleProvider = ({ children }) => {
   const numberOfGuesses = 6
+  let initialGuessedWordsArray = Array(numberOfGuesses).fill('')
   const wordLength = 5
-  // const [gameStatus, setGameStatus] = useState("IN PROGRESS")
+  const [gameStatus, setGameStatus] = useState("IN PROGRESS")
   const [randomWord, setRandomWord] = useState('STEEP')
   const [keyboardValue, setKeyboardValue] = useState([])
-  const [guessedWords, setGuessedWords] = useState(['', '', '', '', '', ''])
+  const [guessedWords, setGuessedWords] = useState(initialGuessedWordsArray)
   const [wordEvaluations, setWordEvaluations] = useState([])
   const [currentWordIndex, setCurrentWordIndex] = useState(guessedWords.indexOf(''))
 
@@ -75,8 +76,7 @@ export const WordleProvider = ({children, init}) => {
     if(randomWord === guessedWord){
       evaluations.push(Array(wordLength).fill('correct'))
       setWordEvaluations(evaluations)
-      // setGameStatus("COMPLETE")
-
+      setGameStatus("COMPLETE")
     } else {
       let baseEvaluations = Array(wordLength).fill('absent')
       let sharedLetters = guessedWordArray.filter(letter => randomWordArray.includes(letter));
@@ -133,6 +133,11 @@ export const WordleProvider = ({children, init}) => {
 
       evaluations.push(baseEvaluations)
       setWordEvaluations(evaluations)
+
+      // End the game if the max number of guesses has been reached
+      if(currentWordIndex + 1 === numberOfGuesses){
+        setGameStatus("FINISHED")
+      }
     }
   }
 
@@ -145,6 +150,7 @@ export const WordleProvider = ({children, init}) => {
       setGuessedWords, 
       randomWord, 
       keyboardValue,
+      gameStatus,
       guessWord,
       addLetter,
       removeLetter,

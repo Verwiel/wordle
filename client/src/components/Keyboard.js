@@ -4,7 +4,7 @@ import { useWordleCtx } from '../context/WordleProvider'
 
 
 const Keyboard = () => {
-  const { addLetter, removeLetter, guessWord } = useWordleCtx()
+  const { addLetter, removeLetter, guessWord, gameStatus } = useWordleCtx()
 
   const keyboardKeys = [['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
     ['', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ''], 
@@ -17,12 +17,16 @@ const Keyboard = () => {
         
         if(letter !== ''){
           return (
-            <button key={letter} onClick={
-              letter === 'ENTER' ?
-              guessWord : letter === 'DELETE' ?
-              removeLetter :
-              (e) => addLetter(e, letter)
-            }>
+            <button 
+              key={letter} 
+              disabled={gameStatus === 'COMPLETE' || gameStatus === 'FINISHED'} 
+              onClick={
+                letter === 'ENTER' ?
+                guessWord : letter === 'DELETE' ?
+                removeLetter :
+                (e) => addLetter(e, letter)
+              }
+            >
               {letterValue}
             </button>
           )
