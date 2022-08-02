@@ -1,16 +1,24 @@
+import { useContext } from 'react'
+import { wordleContext } from '../context/WordleProvider'
 import BoardRow from './BoardRow'
 
-const Board = ({ randomWord, guessedWords }) => {
+const Board = () => {
+  const { guessedWords, numberOfGuesses, currentWordIndex, keyboardValue, wordEvaluations } = useContext(wordleContext)
+
+  const boardRowMap = [...Array(numberOfGuesses).keys()].map(row => (
+    <BoardRow 
+      guessedWord={currentWordIndex === row ? keyboardValue : guessedWords[row]} 
+      evaluations={wordEvaluations} 
+      key={row} 
+      rowNumber={row}
+    />
+  ))
+
+
   return (
     <section className='board-wrap'>
       <div className='board'>
-        {/* called 6 times because there will always be 6 tries */}
-        <BoardRow randomWord={randomWord} guessedWord={guessedWords[0]} />
-        <BoardRow randomWord={randomWord} guessedWord={guessedWords[1] ? guessedWords[1] : ''} />
-        <BoardRow randomWord={randomWord} guessedWord={guessedWords[2] ? guessedWords[2] : ''} />
-        <BoardRow randomWord={randomWord} guessedWord={guessedWords[3] ? guessedWords[3] : ''} />
-        <BoardRow randomWord={randomWord} guessedWord={guessedWords[4] ? guessedWords[4] : ''} />
-        <BoardRow randomWord={randomWord} guessedWord={guessedWords[5] ? guessedWords[5] : ''} />
+        {boardRowMap}
       </div>
     </section>
   )

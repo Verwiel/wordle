@@ -7,7 +7,7 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route path='/' element={<Homepage/>}/>
+          <Route path='/' element={<Homepage/>}/>
         {/* will need login and register routes eventually */}
       </Routes>
     </>

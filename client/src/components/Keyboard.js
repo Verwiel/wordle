@@ -1,18 +1,29 @@
+import { useContext } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons'
+import { wordleContext } from '../context/WordleProvider'
 
-const Keyboard = ({ randomWord }) => {
+const Keyboard = () => {
+  const { addLetter, removeLetter, guessWord } = useContext(wordleContext)
+
   const keyboardKeys = [['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
     ['', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ''], 
-    ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', <FontAwesomeIcon icon={faDeleteLeft} />]]
+    ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'DELETE']]
 
   const keyboardMap = keyboardKeys.map((row, i) => (
     <div key={i} className='keyboard-row'>
       {row.map((letter, i) => {
+        let letterValue = letter === 'DELETE' ? <FontAwesomeIcon icon={faDeleteLeft} /> : letter
+        
         if(letter !== ''){
           return (
-            <button key={letter}>
-              {letter}
+            <button key={letter} onClick={
+              letter === 'ENTER' ?
+              guessWord : letter === 'DELETE' ?
+              removeLetter :
+              () => addLetter(letter)
+            }>
+              {letterValue}
             </button>
           )
         } else {
