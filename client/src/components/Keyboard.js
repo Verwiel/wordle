@@ -1,10 +1,10 @@
-import { useContext } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons'
-import { wordleContext } from '../context/WordleProvider'
+import { useWordleCtx } from '../context/WordleProvider'
+
 
 const Keyboard = () => {
-  const { addLetter, removeLetter, guessWord } = useContext(wordleContext)
+  const { addLetter, removeLetter, guessWord } = useWordleCtx()
 
   const keyboardKeys = [['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
     ['', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ''], 
@@ -21,7 +21,7 @@ const Keyboard = () => {
               letter === 'ENTER' ?
               guessWord : letter === 'DELETE' ?
               removeLetter :
-              () => addLetter(letter)
+              (e) => addLetter(e, letter)
             }>
               {letterValue}
             </button>
@@ -36,9 +36,9 @@ const Keyboard = () => {
   ))
 
   return (
-    <section className='keyboard'>
+    <form className='keyboard'>
       {keyboardMap}
-    </section>
+    </form>
   )
 }
 

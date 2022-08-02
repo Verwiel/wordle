@@ -1,8 +1,8 @@
 import Board from '../components/Board'
 import Keyboard from '../components/Keyboard'
 
-const Homepage = () => {
 
+const Homepage = () => {
   return (
     <main className='homepage'>
       <Board />

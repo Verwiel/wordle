@@ -1,9 +1,12 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useContext } from 'react'
 // import axios from 'axios'
 
-export const wordleContext = createContext()
+const wordleContext = createContext()
 
-const WordleProvider = (props) => {
+export const useWordleCtx = () => useContext(wordleContext)
+
+
+export const WordleProvider = ({children, init}) => {
   const numberOfGuesses = 6
   const wordLength = 5
   // const [gameStatus, setGameStatus] = useState("IN PROGRESS")
@@ -11,9 +14,7 @@ const WordleProvider = (props) => {
   const [keyboardValue, setKeyboardValue] = useState([])
   const [guessedWords, setGuessedWords] = useState(['', '', '', '', '', ''])
   const [wordEvaluations, setWordEvaluations] = useState([])
-
-
-  let currentWordIndex = guessedWords.indexOf('')
+  const [currentWordIndex, setCurrentWordIndex] = useState(guessedWords.indexOf(''))
 
   // const fetchRandomWord = async () => {
     // try {
@@ -25,19 +26,24 @@ const WordleProvider = (props) => {
     // }
   // }
   
-  const addLetter = (letter) => {
-    let array = keyboardValue
-    array.push(letter)
-    setKeyboardValue(array)
+  const addLetter = (e, letter) => {
+    e.preventDefault()
+    if(keyboardValue.length < wordLength){
+      setKeyboardValue([...keyboardValue, letter])
+    }
   }
 
-  const removeLetter = () => {
-    let array = keyboardValue
-    array.pop()
-    setKeyboardValue(array)
+  const removeLetter = (e) => {
+    e.preventDefault()
+    if (keyboardValue.length > 0) {
+      setKeyboardValue([
+        ...keyboardValue.slice(0, -1)
+      ])
+    }
   }
 
-  const guessWord = () => {
+  const guessWord = (e) => {
+    e.preventDefault()
     // validate that the word is long enough
     if(keyboardValue.length < 5){
       alert('Not Enough Letters')
@@ -52,6 +58,7 @@ const WordleProvider = (props) => {
         guessedWords[currentWordIndex] = guessedWord
         setGuessedWords(guessedWords)
         evaluateGuessedWord(guessedWord)
+        setCurrentWordIndex(guessedWords.indexOf(''))
         setKeyboardValue([])
       // } catch(err) {
       //   console.log(err)
@@ -137,16 +144,13 @@ const WordleProvider = (props) => {
       guessedWords, 
       setGuessedWords, 
       randomWord, 
-      keyboardValue, 
-      setKeyboardValue,
+      keyboardValue,
       guessWord,
       addLetter,
       removeLetter,
       wordEvaluations
     }}>
-        {props.children}
+      {children}
     </wordleContext.Provider>
   )
 }
-
-export default WordleProvider
