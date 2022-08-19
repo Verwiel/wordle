@@ -102,3 +102,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Word Banks
+5-letter-words.js
+6-letter-words.js

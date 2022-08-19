@@ -1,5 +1,6 @@
+import { useEffect } from 'react'
 import { createContext, useState, useContext } from 'react'
-// import axios from 'axios'
+import axios from 'axios'
 
 const wordleContext = createContext()
 
@@ -7,6 +8,7 @@ export const useWordleCtx = () => useContext(wordleContext)
 
 
 export const WordleProvider = ({ children }) => {
+  // Location of keys on keyboard and their status (correct, present, or absent)
   const initialKeyboardKeys = [
     {letter: 'Q', status: '', row: 0}, {letter: 'W', status: '', row: 0}, {letter: 'E', status: '', row: 0}, {letter: 'R', status: '', row: 0}, {letter: 'T', status: '', row: 0}, {letter: 'Y', status: '', row: 0}, {letter: 'U', status: '', row: 0}, {letter: 'I', status: '', row: 0}, {letter: 'O', status: '', row: 0}, {letter: 'P', status: '', row: 0},
     {letter: '', status: '', row: 1}, {letter: 'A', status: '', row: 1}, {letter: 'S',  status: '', row: 1}, {letter: 'D', status: '', row: 1}, {letter: 'F', status: '', row: 1}, {letter: 'G', status: '', row: 1}, {letter: 'H', status: '', row: 1}, {letter: 'J', status: '', row: 1}, {letter: 'K', status: '', row: 1}, {letter: 'L', status: '', row: 1}, {letter: '', status: '', row: 1},
@@ -52,16 +54,25 @@ export const WordleProvider = ({ children }) => {
     })
   }
 
-  // const fetchRandomWord = async () => {
-    // try {
-    //   let res = await axios.get(`http://api.wordnik.com/v4/words.json/randomWord?api_key=${process.env.REACT_APP_WORDNIK_API_KEY}`)
-    //   console.log(res)
-    //   // setRandomWord('')
-    //   // setWordDescription('')
-    // } catch(err) {
-    //   console.log(err)
-    // }
-  // }
+  // useEffect(() => {
+  //   // random word are too hard or include hyphens, switch to different API or build my own
+  //   const fetchRandomWord = async () => {
+  //     try {
+  //       let res = await axios.get(`http://api.wordnik.com/v4/words.json/randomWord?api_key=${process.env.REACT_APP_WORDNIK_API_KEY}&hasDictionaryDef=true&minLength=${wordLength}&maxLength=${wordLength}`)
+  //       console.log()
+
+  //       let word = res.data.word
+        
+  //       setRandomWord(word.toUpperCase())
+  //       // setWordDescription('')
+  //     } catch(err) {
+  //       console.log(err)
+  //     }
+  //   }
+
+  //   fetchRandomWord()
+  // },[])
+
   
   const addLetter = (e, letter) => {
     e.preventDefault()
