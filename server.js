@@ -1,26 +1,26 @@
-const express = require('express')
-const bodyParser = require('body-parser')
+const express = require("express")
+const cors = require("cors")
 const app = express()
-const mysql = require('mysql')
-
 require('dotenv').config()
 
-app.use(bodyParser.json())
+const corsOptions = { origin: "http://localhost:8081" }
+app.use(cors(corsOptions))
 
-const conn = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME 
-})
+// parse requests of content-type - application/json
+app.use(express.json())
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }))
 
-conn.connect((err) =>{
-  if(err) throw err;
-  console.log('Mysql Connected with App...');
-})
 
-const port = process.env.PORT || 8080;
+const db = require("./server/models")
+db.sequelize.sync()
 
-app.listen(port, () => {
-  console.log('Server started...')
+// routes
+require('./server/routes/auth.routes')(app)
+require('./server/routes/user.routes')(app)
+
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`)
 })
