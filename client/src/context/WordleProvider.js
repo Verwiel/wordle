@@ -90,7 +90,7 @@ export const WordleProvider = ({ children }) => {
     }
   }
 
-  const guessWord = (e) => {
+  const guessWord = async (e) => {
     e.preventDefault()
     // validate that the word is long enough
     if(keyboardValue.length < 5){
@@ -98,19 +98,22 @@ export const WordleProvider = ({ children }) => {
     } else {
       let guessedWord = keyboardValue.join('')
       // axios to make sure word exists
-      // try {
-      //   let res = await axios.get(`http://api.wordnik.com/v4/words.json/randomWord?api_key=${process.env.REACT_APP_WORDNIK_API_KEY}`)
-      //   console.log(res)
-        
-        // if word exists
-        guessedWords[currentWordIndex] = guessedWord
-        setGuessedWords(guessedWords)
-        evaluateGuessedWord(guessedWord)
-        setCurrentWordIndex(guessedWords.indexOf(''))
-        setKeyboardValue([])
-      // } catch(err) {
-      //   console.log(err)
-      // }
+      try {
+        let res = await axios.get(`/check-word?word=${guessedWord}&length=${wordLength}`)
+        if(res.data){
+          // if word exists
+          guessedWords[currentWordIndex] = guessedWord
+          setGuessedWords(guessedWords)
+          evaluateGuessedWord(guessedWord)
+          setCurrentWordIndex(guessedWords.indexOf(''))
+          setKeyboardValue([])
+        } else {
+          alert('Not in word list')
+        }
+      } catch(err) {
+        console.log(err)
+        alert('Server error')
+      }
     }
   }
 
