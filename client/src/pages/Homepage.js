@@ -6,13 +6,11 @@ import GameOverPanel from '../components/GameOverPanel'
 
 
 const Homepage = () => {
-  const { showingGameOver, fetchRandomWord, randomWord } = useWordleCtx()
+  const { showingGameOver, fetchRandomWord } = useWordleCtx()
 
   useEffect(() => {
     fetchRandomWord()
   }, [])
-
-  console.log(randomWord)
   
   return (
     <main className='homepage'>
