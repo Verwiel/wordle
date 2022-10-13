@@ -15,6 +15,25 @@ exports.getRandomWord = (req, res) => {
   })
 }
 
+exports.checkWordValidity = (req, res) => {
+  Word.findOne({ 
+    where: { 
+      word: req.query.word,
+      length: req.query.length
+    } 
+  })
+  .then(word => {
+    if(word !== null){
+      res.status(200).send(true)
+    } else {
+      res.status(200).send(false)
+    }
+  })
+  .catch(err => {
+    res.status(500).send({ message: err.message })
+  })
+}
+
 exports.addWord = (req, res) => {
   res.status(200).send("addWord")
 }
