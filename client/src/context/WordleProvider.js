@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { createContext, useState, useContext } from 'react'
 import axios from 'axios'
 
@@ -19,7 +18,7 @@ export const WordleProvider = ({ children }) => {
   let initialGuessedWordsArray = Array(numberOfGuesses).fill('')
   const wordLength = 5
   const [gameStatus, setGameStatus] = useState("IN PROGRESS")
-  const [randomWord, setRandomWord] = useState('STEEP')
+  const [randomWord, setRandomWord] = useState('')
   const [wordDescription, setWordDescription] = useState('test')
   const [keyboardValue, setKeyboardValue] = useState([])
   const [guessedWords, setGuessedWords] = useState(initialGuessedWordsArray)
@@ -54,25 +53,30 @@ export const WordleProvider = ({ children }) => {
     })
   }
 
-  // useEffect(() => {
-  //   // random word are too hard or include hyphens, switch to different API or build my own
-  //   const fetchRandomWord = async () => {
-  //     try {
-  //       let res = await axios.get(`http://api.wordnik.com/v4/words.json/randomWord?api_key=${process.env.REACT_APP_WORDNIK_API_KEY}&hasDictionaryDef=true&minLength=${wordLength}&maxLength=${wordLength}`)
-  //       console.log()
+  const fetchRandomWord = async () => {
+    try {
+      let res = await axios.get(`random-word?length=${wordLength}`)
+      let word = res.data.word
+      setRandomWord(word.toUpperCase())
+      // setWordDescription('')
+    } catch(err) {
+      console.log(err)
+    }
+  }
 
-  //       let word = res.data.word
-        
-  //       setRandomWord(word.toUpperCase())
-  //       // setWordDescription('')
-  //     } catch(err) {
-  //       console.log(err)
-  //     }
-  //   }
-
-  //   fetchRandomWord()
-  // },[])
-
+  // used on the game over panel to start a new game
+  const resetBoard = () => {
+    // clear state
+    setGameStatus("IN PROGRESS")
+    setKeyboardValue([])
+    setGuessedWords(initialGuessedWordsArray)
+    setWordEvaluations([])
+    setCurrentWordIndex(0)
+    setShowingGameOver(false)
+    setKeyboardKeys(initialKeyboardKeys)
+    // reset word
+    fetchRandomWord()
+  }
   
   const addLetter = (e, letter) => {
     e.preventDefault()
@@ -213,7 +217,9 @@ export const WordleProvider = ({ children }) => {
       guessWord,
       addLetter,
       removeLetter,
-      wordEvaluations
+      wordEvaluations,
+      fetchRandomWord,
+      resetBoard
     }}>
       {children}
     </wordleContext.Provider>

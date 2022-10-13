@@ -2,7 +2,7 @@ import { useWordleCtx } from '../context/WordleProvider'
 
 
 const GameOverPanel = () => {
-  const { randomWord, gameStatus } = useWordleCtx()
+  const { randomWord, gameStatus, resetBoard } = useWordleCtx()
   return (
     <article className='gameover-panel'>
       <header>
@@ -15,7 +15,7 @@ const GameOverPanel = () => {
       </section>
 
       <section>
-        <button className='rounded-button'>Try a new word?</button>
+        <button className='rounded-button' onClick={resetBoard}>Try a new word?</button>
       </section>
     </article>
   )
