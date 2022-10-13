@@ -3,6 +3,7 @@ const controller = require("../controllers/auth.controller")
 
 
 module.exports = function(app) {
+  app.get('/check-user', controller.checkUsersExistence)
 
   app.use(function(req, res, next) {
     res.header(
@@ -20,5 +21,6 @@ module.exports = function(app) {
     ],
     controller.signup
   )
+
   app.post("/api/auth/signin", controller.signin)
 }

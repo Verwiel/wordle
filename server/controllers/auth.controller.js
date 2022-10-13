@@ -6,6 +6,22 @@ const Op = db.Sequelize.Op
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
 
+exports.checkUsersExistence = (req, res) => {
+  User.findOne({
+    where: { username: req.query.username }
+  })
+  .then(user => {
+    if(user) {
+      res.send({ redirectPath: `/login/${req.query.username}` })
+    } else {
+      res.send({ redirectPath: `/register/${req.query.username}` })
+    }
+  })
+  .catch(err => {
+    res.status(500).send({ message: err.message })
+  })
+}
+
 exports.signup = (req, res) => {
   // Save User to Database
   User.create({
@@ -20,7 +36,8 @@ exports.signup = (req, res) => {
             [Op.or]: req.body.roles
           }
         }
-      }).then(roles => {
+      })
+      .then(roles => {
         user.setRoles(roles).then(() => {
           res.send({ message: "User was registered successfully!" })
         })
@@ -45,7 +62,7 @@ exports.signin = (req, res) => {
   })
   .then(user => {
     if (!user) {
-      return res.status(404).send({ message: "User Not found." })
+      return res.status(404).send({ message: "Invalid username or password!" })
     }
     const passwordIsValid = bcrypt.compareSync(
       req.body.password,
@@ -54,7 +71,7 @@ exports.signin = (req, res) => {
     if (!passwordIsValid) {
       return res.status(401).send({
         accessToken: null,
-        message: "Invalid Password!"
+        message: "Invalid username or password!"
       })
     }
     const token = jwt.sign({ id: user.id }, config.secret, {
