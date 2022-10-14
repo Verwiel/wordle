@@ -5,9 +5,9 @@ const Portal = () => {
   const { redirect, redirectPath, setUsername, checkLoginOrRegister } = useAuthCtx()
 
   return (
-    <main className='homepage'>
+    <main>
       {redirect &&
-        <Navigate  to={redirectPath} replace={true} />
+        <Navigate to={redirectPath} replace={true} />
       }
 
       <h2>Log in or create a free account to save your stats.</h2>
@@ -37,6 +37,3 @@ const Portal = () => {
 }
 
 export default Portal
-
-// Please enter a valid email address.
-// Please enter your username.

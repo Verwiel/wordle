@@ -1,5 +1,6 @@
 .homepage {
-  height: calc(100vh - $header-height);
+  // add extra 5px to avoid scroll bar
+  height: calc(100vh - $header-height - 5px);
   display: flex;
   align-items: center;
   justify-content: center;

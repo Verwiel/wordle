@@ -10,8 +10,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-grow: 1;
+    flex-grow: .75;
     overflow: hidden;
+    max-width: 100%;
   }
   &-row {
     display: grid;

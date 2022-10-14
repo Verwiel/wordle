@@ -1,4 +1,4 @@
-import { useWordleCtx } from '../context/WordleProvider'
+import { useWordleCtx } from '../../context/WordleProvider'
 
 
 const GameOverPanel = () => {

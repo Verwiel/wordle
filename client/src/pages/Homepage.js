@@ -1,9 +1,8 @@
 import { useEffect } from 'react'
 import { useWordleCtx } from '../context/WordleProvider'
-import Board from '../components/Board'
-import Keyboard from '../components/Keyboard'
-import GameOverPanel from '../components/GameOverPanel'
-
+import Board from '../components/game/Board'
+import Keyboard from '../components/game/Keyboard'
+import GameOverPanel from '../components/game/GameOverPanel'
 
 const Homepage = () => {
   const { showingGameOver, fetchRandomWord } = useWordleCtx()
