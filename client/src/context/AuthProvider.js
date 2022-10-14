@@ -6,12 +6,14 @@ const authContext = createContext()
 export const useAuthCtx = () => useContext(authContext)
 
 export const AuthProvider = ({ children }) => {
-  const [username, setUsername] = useState('')
+  let wordleStorage = localStorage.getItem("wordleClone")
+  let token = wordleStorage ? wordleStorage.token : ''
+
+  const [username, setUsername] = useState(wordleStorage ? wordleStorage.username : '')
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [redirect, setRedirect] = useState(false)
   const [redirectPath, setRedirectPath] = useState('')
-  const [token, setToken] = useState('')
 
   const checkLoginOrRegister = async (e) => {
     e.preventDefault()
@@ -28,16 +30,20 @@ export const AuthProvider = ({ children }) => {
     e.preventDefault()
     let body = { username: username, password: password }
 
-    try {
-      let res = await axios.post('/api/auth/signup', body)
-      const { username, accessToken } = res.data
-      let storageData = {
-        token: accessToken,
-        username: username
+    if(password !== passwordConfirm){
+      alert('Passwords do not match')
+    } else {
+      try {
+        let res = await axios.post('/api/auth/signup', body)
+        const { username, accessToken } = res.data
+        let storageData = {
+          token: accessToken,
+          username: username
+        }
+        localStorage.setItem("wordleClone", JSON.stringify(storageData))
+      } catch (error) {
+        console.log(error)
       }
-      localStorage.setItem("wordleClone", JSON.stringify(storageData))
-    } catch (error) {
-      console.log(error)
     }
   }
 
@@ -53,17 +59,15 @@ export const AuthProvider = ({ children }) => {
         username: username
       }
       localStorage.setItem("wordleClone", JSON.stringify(storageData))
+      console.log('Logged In!')
     } catch (error) {
       console.log(error)
     }
   }
 
-  const getUserFromStorage = () => {
-    let storageData = localStorage.getItem("wordleClone")
-    setUsername(storageData.username)
-    setToken(storageData.token)
+  const getUserFromUrl = (username) => {
+    setUsername(username)
   }
-
 
   return (
     <authContext.Provider value={{
@@ -72,13 +76,14 @@ export const AuthProvider = ({ children }) => {
       passwordConfirm, 
       redirect,
       redirectPath,
+      token,
       setUsername,
       setPassword, 
       setPasswordConfirm,
       checkLoginOrRegister,
       createAccount,
       login,
-      getUserFromStorage
+      getUserFromUrl
     }}>
       {children}
     </authContext.Provider>

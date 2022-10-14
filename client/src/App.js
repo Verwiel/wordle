@@ -14,7 +14,6 @@ function App() {
         <Route path='/portal' element={<Portal/>}/>
         <Route path='/login/:user' element={<Login/>}/>
         <Route path='/register/:user' element={<Register/>}/>
-        {/* will need login and register routes eventually */}
       </Routes>
     </>
   )

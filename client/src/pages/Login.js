@@ -3,12 +3,13 @@ import { useParams } from "react-router-dom"
 import { useAuthCtx } from "../context/AuthProvider"
 
 const Login = () => {
-  const { username, password, setUsername, setPassword, login } = useAuthCtx()
+  const { username, password, setUsername, setPassword, login, getUserFromUrl } = useAuthCtx()
   const { user } = useParams()
 
   useEffect(() => {
-    setUsername(user)
-  }, [])
+    getUserFromUrl(user)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user])
 
   return (
     <main>
@@ -21,7 +22,7 @@ const Login = () => {
           <input 
             type="text" 
             minLength={8}  
-            value={username} 
+            defaultValue={username} 
             onChange={(e) => setUsername(e.target.value)} 
             required 
           />
@@ -31,7 +32,7 @@ const Login = () => {
           <input 
             type="password" 
             minLength={8}
-            value={password} 
+            defaultValue={password} 
             onChange={(e) => setPassword(e.target.value)} 
             required 
           />
