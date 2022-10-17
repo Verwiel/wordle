@@ -1,5 +1,9 @@
+import { Link } from 'react-router-dom'
+import { useUtilityCtx } from '../context/UtilityProvider'
 
 const Statistics = () => {
+  const { toggleModal } = useUtilityCtx()
+
   return (
     <article>
       <p><b>STATISTICS</b></p>
@@ -30,8 +34,10 @@ const Statistics = () => {
       </section>
 
       <aside>
-        <p>Looking to load your saved stats?</p>
-        <a href='#'>Log in here</a>
+        <span>
+          <Link to='/portal' onClick={() => toggleModal('close', '')}>Log in or create an account</Link>
+          {' '}to link your stats
+        </span>
       </aside>
     </article>
   )

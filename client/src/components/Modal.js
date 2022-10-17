@@ -33,7 +33,6 @@ const Modal = () => {
         <button onClick={() => toggleModal('close', '')} className='modal-close'>
           <FontAwesomeIcon icon={faXmark} />
         </button>
-        <h2>Modal</h2> 
         {displayedModal}
       </section>
     </div>

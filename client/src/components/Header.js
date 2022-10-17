@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faCircleQuestion, faChartSimple, faGear } from '@fortawesome/free-solid-svg-icons'
+import { faCircleQuestion, faChartSimple, faGear } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 import { useUtilityCtx } from '../context/UtilityProvider'
 
@@ -12,10 +12,6 @@ const Header = () => {
         <h1 >Wordle</h1>
       </Link>
       <span className='main-header-options'>
-        {/* remove and just have the buttons to sign in from the modals? */}
-        <Link to='/portal'>
-          <FontAwesomeIcon icon={faUser} />
-        </Link>
         <button onClick={() => toggleModal('open', 'help')}>
           <FontAwesomeIcon icon={faCircleQuestion} />
         </button>
