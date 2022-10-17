@@ -9,7 +9,7 @@ export const UtilityProvider = ({ children }) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [modalName, setModalName] = useState('')
 
-  const toggleModal = (selectedModal, action) => {
+  const toggleModal = (action, selectedModal) => {
     // selected modal can be: help, stats, or settings
     if(action === 'open'){
       setModalName(selectedModal)

@@ -11,18 +11,18 @@ const Header = () => {
       <Link to='/' className='main-header-text'>
         <h1 >Wordle</h1>
       </Link>
-
       <span className='main-header-options'>
+        {/* remove and just have the buttons to sign in from the modals? */}
         <Link to='/portal'>
           <FontAwesomeIcon icon={faUser} />
         </Link>
-        <button onClick={() => toggleModal('help', 'open')}>
+        <button onClick={() => toggleModal('open', 'help')}>
           <FontAwesomeIcon icon={faCircleQuestion} />
         </button>
-        <button onClick={() => toggleModal('stats', 'open')}>
+        <button onClick={() => toggleModal('open', 'stats')}>
           <FontAwesomeIcon icon={faChartSimple} />
         </button>
-        <button onClick={() => toggleModal('settings', 'open')}>
+        <button onClick={() => toggleModal('open', 'settings')}>
           <FontAwesomeIcon icon={faGear} />
         </button>
       </span>

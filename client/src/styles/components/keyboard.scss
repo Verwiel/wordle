@@ -2,7 +2,7 @@
   margin: 0 8px;
   width: calc(100% - 16px);
   height: $keyboard-height;
-  max-width: 500px;
+  max-width: $max-game-width;
   &-row {
     display: flex;
     justify-content: space-between;
