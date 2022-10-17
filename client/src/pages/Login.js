@@ -1,20 +1,23 @@
 import { useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { useAuthCtx } from "../context/AuthProvider"
 
 const Login = () => {
-  const { username, password, setUsername, setPassword, login, getUserFromUrl } = useAuthCtx()
+  const { username, password, setUsername, setPassword, login, getUserFromUrl, clearRedirect } = useAuthCtx()
   const { user } = useParams()
 
   useEffect(() => {
     getUserFromUrl(user)
+    return () => clearRedirect()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   return (
-    <main>
-      <h2>Log in</h2>
-      <p>Your Wordle stats will be linked to your account and will update wherever you play.</p>
+    <main className='portal'>
+      <header>
+        <h2>Log in</h2>
+        <p>Your Wordle stats will be linked to your account and will update wherever you play.</p>
+      </header>
 
       <form onSubmit={login}>
         <label htmlFor="">
@@ -42,6 +45,12 @@ const Login = () => {
 
         <button>Log In</button>
       </form>
+
+      <aside className='portal-return'>
+        <Link to='/portal'>
+          Return to portal
+        </Link>
+      </aside>
     </main>
   )
 }

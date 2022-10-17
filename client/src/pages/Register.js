@@ -1,20 +1,23 @@
 import { useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { useAuthCtx } from "../context/AuthProvider"
 
 const Register = () => {
-  const { username, password, passwordConfirm, setUsername, setPassword, setPasswordConfirm, createAccount, getUserFromUrl } = useAuthCtx()
+  const { username, password, passwordConfirm, setUsername, setPassword, setPasswordConfirm, createAccount, getUserFromUrl, clearRedirect } = useAuthCtx()
   const { user } = useParams()
 
   useEffect(() => {
     getUserFromUrl(user)
+    return () => clearRedirect()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   return (
-    <main>
-      <h2>Finish creating your free account.</h2>
-      <p>Your Wordle stats will be linked to your account and will update wherever you play.</p>
+    <main className='portal'>
+      <header>
+        <h2>Finish creating your free account.</h2>
+        <p>Your Wordle stats will be linked to your account and will update wherever you play.</p>
+      </header>
 
       <form onSubmit={createAccount}>
         <label htmlFor="">
@@ -49,6 +52,12 @@ const Register = () => {
         </label>
         <button>Create Account</button>
       </form>
+
+      <aside className='portal-return'>
+        <Link to='/portal'>
+          Return to portal
+        </Link>
+      </aside>
     </main>
   )
 }

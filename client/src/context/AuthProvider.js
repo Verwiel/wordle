@@ -69,6 +69,11 @@ export const AuthProvider = ({ children }) => {
     setUsername(username)
   }
 
+  const clearRedirect = () => {
+    setRedirectPath('')
+    setRedirect(false)
+  }
+
   return (
     <authContext.Provider value={{
       username,
@@ -83,7 +88,8 @@ export const AuthProvider = ({ children }) => {
       checkLoginOrRegister,
       createAccount,
       login,
-      getUserFromUrl
+      getUserFromUrl,
+      clearRedirect
     }}>
       {children}
     </authContext.Provider>
