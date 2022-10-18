@@ -29,7 +29,7 @@ const Portal = () => {
         <button>Continue</button>
       </form>
 
-      <aside className='portal-or'>
+      {/* <aside className='portal-or'>
         <hr />
         <p>or</p>
       </aside>
@@ -38,7 +38,7 @@ const Portal = () => {
         <button>Continue with Google</button>
         <button>Continue with Facebook</button>
         <button>Continue with Apple</button>
-      </section>
+      </section> */}
 
       <p>
         <small>This app was developed as a side project for my portfolio. Since it wont be maintained forever, I figured it would be irresponsible to store any of your sensetive data so only a username is used to sign up. By omitting the email address there isnt a way to verify a password reset so I removed the ability.</small>
