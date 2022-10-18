@@ -1,33 +1,80 @@
 import ModalLoginLink from './ModalLoginLink'
 
 const Statistics = () => {
-  return (
-    <article>
-      <p><b>STATISTICS</b></p>
+  const testData = [
+    {
+      id: 1,
+      outcome: 'win',
+      guesses: 5
+    },
+    {
+      id: 2,
+      outcome: 'win',
+      guesses: 2
+    },
+    {
+      id: 3,
+      outcome: 'win',
+      guesses: 2
+    },
+    {
+      id: 4,
+      outcome: 'loss',
+      guesses: null
+    },
+  ]
 
-      <section>
+  const average = (partial, total) => {
+    return Math.round((100 * partial) / total)
+  }
+
+  const guessStructure = Array(6).fill('')
+  const gamesPlayed = testData.length
+  const gamesWon = testData.filter(game => game.outcome === 'win').length
+  const winPercent = average(gamesWon, gamesPlayed)
+  const guessArray = testData.map(({ guesses }) => guesses).filter(guess => guess !== null)
+
+  const distributionMap = guessStructure.map((position, i) => {
+    let number = i + 1
+    let count = guessArray.filter(guess => guess === number).length
+    let width = count > 0 ? `${average(count, guessArray.length)}%` : 'auto'
+    return (
+      <li key={number}>
+        <p>{number}</p>
+        <div style={{width: width}}><p>{count}</p></div>
+      </li>
+    )
+  })
+
+
+  return (
+    <article className='modal-body-stats'>
+      <strong>STATISTICS</strong>
+
+      <section className='modal-body-stats-overall'>
         <span>
-          <strong>0</strong>
+          <b>{gamesPlayed}</b>
           <p>Played</p>
         </span>
         <span>
-          <strong>0</strong>
+          <b>{winPercent}</b>
           <p>Win %</p>
         </span>
         <span>
-          <strong>0</strong>
+          <b>0</b>
           <p>Current Streak</p>
         </span>
         <span>
-          <strong>0</strong>
+          <b>0</b>
           <p>Max Streak</p>
         </span>
       </section>
 
-      <section>
-        <p><b>GUESS DISTRIBUTION</b></p>
-        {/* Number */}
-        {/* Progressbar with amount of times acheived within */}
+      <strong>GUESS DISTRIBUTION</strong>
+      <section className='modal-body-stats-distribution'>
+        <ul className='modal-body-stats-distribution-chart'>
+          {distributionMap}
+        </ul>
       </section>
 
       <ModalLoginLink />
