@@ -1,11 +1,6 @@
-import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChartSimple } from '@fortawesome/free-solid-svg-icons'
-import { useUtilityCtx } from '../context/UtilityProvider'
+import ModalLoginLink from './ModalLoginLink'
 
 const Statistics = () => {
-  const { toggleModal } = useUtilityCtx()
-
   return (
     <article>
       <p><b>STATISTICS</b></p>
@@ -35,13 +30,7 @@ const Statistics = () => {
         {/* Progressbar with amount of times acheived within */}
       </section>
 
-      <aside>
-        <p><FontAwesomeIcon icon={faChartSimple} /></p>
-        <span>
-          <Link to='/portal' onClick={() => toggleModal('close', '')}>Log in or create an account</Link>
-          {' '}to link your stats
-        </span>
-      </aside>
+      <ModalLoginLink />
     </article>
   )
 }

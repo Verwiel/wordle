@@ -1,11 +1,6 @@
-import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChartSimple } from '@fortawesome/free-solid-svg-icons'
-import { useUtilityCtx } from '../context/UtilityProvider'
+import ModalLoginLink from './ModalLoginLink'
 
 const HowToPlay = () => {
-  const { toggleModal } = useUtilityCtx()
-
   return (
     <article className='modal-body-help'>
       <header>
@@ -76,13 +71,7 @@ const HowToPlay = () => {
         <p><b>U</b> is not in the word in any spot.</p>
       </section>
 
-      <aside>
-        <p><FontAwesomeIcon icon={faChartSimple} /></p>
-        <span>
-          <Link to='/portal' onClick={() => toggleModal('close', '')}>Log in or create an account</Link>
-          {' '}to link your stats
-        </span>
-      </aside>
+      <ModalLoginLink />
     </article>
   )
 }
