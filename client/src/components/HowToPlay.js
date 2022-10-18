@@ -7,7 +7,7 @@ const HowToPlay = () => {
   const { toggleModal } = useUtilityCtx()
 
   return (
-    <article>
+    <article className='modal-body-help'>
       <header>
         <h2>HOW TO PLAY</h2>
         <h3>Guess the Wordle in 6 tries.</h3>

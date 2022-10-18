@@ -20,48 +20,7 @@
     border-radius: 8px;
     border: 1px solid #f6f7f8;
     background-color: white;
-    header {
-      h2 {
-        font-family: "nyt-karnakcondensed";
-        font-weight: 700;
-        font-size: 28px;
-        letter-spacing: 0;
-        line-height: 30px;
-        text-transform: none;
-        text-align: left;
-        margin-bottom: 4px;
-        margin-top: 0;
-      }
-      h3 {
-        font-family: "nyt-karnak";
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 24px;
-        margin: 0;
-      }
-    }
-    ul {
-      font-family: "nyt-franklin";
-      font-size: 16px;
-      line-height: 20px;
-      font-weight: 500;
-      -webkit-padding-start: 20px;
-      padding-inline-start: 20px;
-      color: $black;
-      li {
-        margin-bottom: 4px;
-      }
-    }
-    strong {
-      margin: 0;
-      font-size: 16px;
-      line-height: 20px;
-    }
-    section {
-      p {
-        margin: 8px 0 0 0;
-      }
-    }
+    // login links
     aside {
       font-family: "nyt-franklin";
       position: relative;
@@ -90,23 +49,69 @@
         color: $darkendGreen;
       }
     }
-    &-help-word {
-      display: flex;
-      margin-top: 8px;
-      &-tile {
+
+    &-help {
+      header {
+        h2 {
+          font-family: "nyt-karnakcondensed";
+          font-weight: 700;
+          font-size: 28px;
+          letter-spacing: 0;
+          line-height: 30px;
+          text-transform: none;
+          text-align: left;
+          margin-bottom: 4px;
+          margin-top: 0;
+        }
+        h3 {
+          font-family: "nyt-karnak";
+          font-weight: 500;
+          font-size: 20px;
+          line-height: 24px;
+          margin: 0;
+        }
+      }
+      ul {
+        font-family: "nyt-franklin";
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 500;
+        -webkit-padding-start: 20px;
+        padding-inline-start: 20px;
+        color: $black;
+        li {
+          margin-bottom: 4px;
+        }
+      }
+      strong {
+        margin: 0;
+        font-size: 16px;
+        line-height: 20px;
+      }
+      section {
+        p {
+          margin: 8px 0 0 0;
+          color: $black;
+        }
+      }
+      &-word {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 28px;
-        height: 28px;
-        margin-right: 4px;
-        &-letter {
-          font-size: 22px;
-          line-height: 1;
-          font-weight: bold;
-          vertical-align: middle;
-          box-sizing: border-box;
-          text-transform: uppercase;
+        margin-top: 15px;
+        &-tile {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 28px;
+          height: 28px;
+          margin-right: 4px;
+          &-letter {
+            font-size: 22px;
+            line-height: 1;
+            font-weight: bold;
+            vertical-align: middle;
+            box-sizing: border-box;
+            text-transform: uppercase;
+          }
         }
       }
     }

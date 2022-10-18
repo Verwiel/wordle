@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChartSimple } from '@fortawesome/free-solid-svg-icons'
 import { useUtilityCtx } from '../context/UtilityProvider'
 
 const Statistics = () => {
@@ -34,6 +36,7 @@ const Statistics = () => {
       </section>
 
       <aside>
+        <p><FontAwesomeIcon icon={faChartSimple} /></p>
         <span>
           <Link to='/portal' onClick={() => toggleModal('close', '')}>Log in or create an account</Link>
           {' '}to link your stats
