@@ -5,7 +5,15 @@ module.exports = (sequelize, Sequelize) => {
     },
     password: {
       type: Sequelize.STRING
-    }
+    },
+    currentStreak: {
+      type: Sequelize.INTEGER,
+      defaultValue: 0
+    },
+    maxStreak: {
+      type: Sequelize.INTEGER,
+      defaultValue: 0
+    },
   })
   return User
 }
