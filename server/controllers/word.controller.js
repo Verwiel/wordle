@@ -2,36 +2,34 @@ const db = require("../models")
 const Word = db.word
 
 
-exports.getRandomWord = (req, res) => {
-  Word.findOne({ 
-    where: { length: req.query.length },
-    order: [ db.Sequelize.literal('RAND()') ]
-  })
-  .then(word => {
-    res.status(200).send(word)
-  })
-  .catch(err => {
+exports.getRandomWord = async (req, res) => {
+  try {
+    let randomWord = await Word.findOne({ 
+      where: { length: req.query.length },
+      order: [ db.Sequelize.literal('RAND()') ]
+    })
+    res.status(200).send(randomWord)
+  } catch(err) {
     res.status(500).send({ message: err.message })
-  })
+  }
 }
 
-exports.checkWordValidity = (req, res) => {
-  Word.findOne({ 
-    where: { 
-      word: req.query.word,
-      length: req.query.length
-    } 
-  })
-  .then(word => {
+exports.checkWordValidity = async (req, res) => {
+  try {
+    let word = await Word.findOne({ 
+      where: { 
+        word: req.query.word,
+        length: req.query.length
+      } 
+    })
     if(word !== null){
       res.status(200).send(true)
     } else {
       res.status(200).send(false)
     }
-  })
-  .catch(err => {
+  } catch(err) {
     res.status(500).send({ message: err.message })
-  })
+  }
 }
 
 exports.addWord = (req, res) => {

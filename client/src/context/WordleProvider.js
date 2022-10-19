@@ -201,6 +201,8 @@ export const WordleProvider = ({ children }) => {
     }
   }
 
+  // console.log(randomWord)
+
   return (
     <wordleContext.Provider value={{
       keyboardKeys,

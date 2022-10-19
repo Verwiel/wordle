@@ -6,29 +6,28 @@ const Op = db.Sequelize.Op
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
 
-exports.checkUsersExistence = (req, res) => {
-  User.findOne({
-    where: { username: req.query.username }
-  })
-  .then(user => {
+exports.checkUsersExistence = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      where: { username: req.query.username }
+    })
     if(user) {
       res.send({ redirectPath: `/login/${req.query.username}` })
     } else {
       res.send({ redirectPath: `/register/${req.query.username}` })
     }
-  })
-  .catch(err => {
+  } catch(err) {
     res.status(500).send({ message: err.message })
-  })
+  }
 }
 
-exports.signup = (req, res) => {
+exports.signup = async (req, res) => {
   // Save User to Database
-  User.create({
-    username: req.body.username,
-    password: bcrypt.hashSync(req.body.password, 8)
-  })
-  .then(user => {
+  try {
+    const user = await User.create({
+      username: req.body.username,
+      password: bcrypt.hashSync(req.body.password, 8)
+    })
     if (req.body.roles) {
       Role.findAll({
         where: {
@@ -48,19 +47,19 @@ exports.signup = (req, res) => {
         res.send({ message: "User was registered successfully!" })
       })
     }
-  })
-  .catch(err => {
+  } catch(err) {
     res.status(500).send({ message: err.message })
-  })
+  }
 }
 
-exports.signin = (req, res) => {
-  User.findOne({
-    where: {
-      username: req.body.username
-    }
-  })
-  .then(user => {
+exports.signin = async (req, res) => {
+  try {
+    let user = await User.findOne({
+      where: {
+        username: req.body.username
+      }
+    })
+
     if (!user) {
       return res.status(404).send({ message: "Invalid username or password!" })
     }
@@ -89,8 +88,8 @@ exports.signin = (req, res) => {
         accessToken: token
       })
     })
-  })
-  .catch(err => {
+
+  } catch (err) {
     res.status(500).send({ message: err.message })
-  })
+  }
 }
