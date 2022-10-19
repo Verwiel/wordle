@@ -3,7 +3,7 @@ const Game = db.game
 
 exports.getUsersGames = async (req, res) => {
   try {
-    const games = await Game.findAll({ include: User })
+    const games = await Game.findAll({ where: { userId: req.params.id } })
     res.status(200).send(games)
   } catch(err) {
     res.status(500).send({ message: err.message })

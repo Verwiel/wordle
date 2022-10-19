@@ -10,6 +10,6 @@ module.exports = function(app) {
     next()
   })
 
-  app.get("/games", controller.getUsersGames)
+  app.get("/games/:id", controller.getUsersGames)
   app.post("/submit-game", controller.submitGame)
 }

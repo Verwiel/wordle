@@ -28,6 +28,7 @@ export const WordleProvider = ({ children, storedUser }) => {
   const [keyboardKeys, setKeyboardKeys] = useState(initialKeyboardKeys)
   const [currentStreak, setCurrentStreak] = useState(0)
   const [maxStreak, setMaxStreak] = useState(0)
+  const [usersGames, setUsersGames] = useState([])
   // correct, absent, present, or blank
 
 
@@ -133,6 +134,16 @@ export const WordleProvider = ({ children, storedUser }) => {
       console.log(err)
     }
   }
+
+  const getUsersGames = async () => {
+    try {
+      let res = await axios.get(`/games/${storedUser.id}`)
+      setUsersGames(res.data)
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
 
   const createGameRecord = async (status, attempts) => {
     let current = currentStreak
@@ -251,6 +262,7 @@ export const WordleProvider = ({ children, storedUser }) => {
     }
   }
 
+
   return (
     <wordleContext.Provider value={{
       keyboardKeys,
@@ -270,7 +282,11 @@ export const WordleProvider = ({ children, storedUser }) => {
       wordEvaluations,
       fetchRandomWord,
       resetBoard,
-      getUserStreaks
+      getUserStreaks,
+      getUsersGames,
+      usersGames,
+      currentStreak,
+      maxStreak
     }}>
       {children}
     </wordleContext.Provider>

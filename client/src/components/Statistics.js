@@ -1,38 +1,22 @@
+import { useEffect } from 'react'
+import { useWordleCtx } from '../context/WordleProvider'
 import ModalLoginLink from './ModalLoginLink'
 
 const Statistics = () => {
-  const testData = [
-    {
-      id: 1,
-      outcome: 'win',
-      guesses: 5
-    },
-    {
-      id: 2,
-      outcome: 'win',
-      guesses: 2
-    },
-    {
-      id: 3,
-      outcome: 'win',
-      guesses: 2
-    },
-    {
-      id: 4,
-      outcome: 'loss',
-      guesses: null
-    },
-  ]
+  const { getUsersGames, usersGames, currentStreak, maxStreak } = useWordleCtx()
+
+  useEffect(() => {
+    getUsersGames()
+  }, [])
 
   const average = (partial, total) => {
     return Math.round((100 * partial) / total)
   }
 
   const guessStructure = [1, 2, 3, 4, 5, 6]
-  const gamesPlayed = testData.length
-  const gamesWon = testData.filter(game => game.outcome === 'win').length
-  const winPercent = average(gamesWon, gamesPlayed)
-  const guessArray = testData.map(({ guesses }) => guesses).filter(guess => guess !== null)
+  const gamesPlayed = usersGames.length
+  const gamesWon = usersGames.filter(game => game.outcome === 'win').length
+  const guessArray = usersGames.map(({ guesses }) => guesses).filter(guess => guess !== null)
 
   const distributionMap = guessStructure.map((number, i) => {
     let count = guessArray.filter(guess => guess === number).length
@@ -56,15 +40,15 @@ const Statistics = () => {
           <p>Played</p>
         </span>
         <span>
-          <b>{winPercent}</b>
+          <b>{average(gamesWon, gamesPlayed)}</b>
           <p>Win %</p>
         </span>
         <span>
-          <b>0</b>
+          <b>{currentStreak}</b>
           <p>Current Streak</p>
         </span>
         <span>
-          <b>0</b>
+          <b>{maxStreak}</b>
           <p>Max Streak</p>
         </span>
       </section>
