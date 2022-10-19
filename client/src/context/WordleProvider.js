@@ -122,14 +122,27 @@ export const WordleProvider = ({ children, storedUser }) => {
   }
 
   const createGameRecord = async (status) => {
+    console.log(storedUser)
+    let currentStreak = 0
+    let maxStreak = storedUser.maxStreak
+    if(status === 'win'){
+      currentStreak = storedUser.currentStreak + 1
+      if(currentStreak > storedUser.maxStreak){
+        maxStreak = storedUser.maxStreak + 1
+      }
+    }
+
+    storedUser.currentStreak = currentStreak
+    storedUser.maxStreak = maxStreak
+
     let body = {
-      game: {
+      gameData: {
         outcome: status,
         guesses: 1,
         wordLength: wordLength,
         userId: storedUser.id
       },
-      user: storedUser
+      userData: storedUser
     } 
 
     try {

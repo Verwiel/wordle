@@ -1,28 +1,27 @@
-import { Route, Routes } from 'react-router-dom'
+import decode from 'jwt-decode'
+import { WordleProvider } from './context/WordleProvider'
+import { AuthProvider } from './context/AuthProvider'
 import { useUtilityCtx } from './context/UtilityProvider'
 import Header from './components/Header'
-import Homepage from './pages/Homepage'
-import Portal from './pages/Portal'
-import Login from './pages/Login'
-import Register from './pages/Register'
+import ProjectRoutes from './ProjectRoutes'
 import Modal from './components/Modal'
+
 
 function App() {
   const { modalOpen } = useUtilityCtx()
-
+  let storedToken = localStorage.getItem("wordleClone")
+  let decodedJwt = storedToken ? decode(storedToken) : ''
+  
   return (
-    <>
-      <Header />
-      {modalOpen &&
-        <Modal />
-      }
-      <Routes>
-        <Route path='/' element={<Homepage/>}/>
-        <Route path='/portal' element={<Portal/>}/>
-        <Route path='/login/:user' element={<Login/>}/>
-        <Route path='/register/:user' element={<Register/>}/>
-      </Routes>
-    </>
+    <AuthProvider storedUser={decodedJwt.user} >
+      <WordleProvider storedUser={decodedJwt.user} >
+        <Header />
+        {modalOpen &&
+          <Modal />
+        }
+        <ProjectRoutes />
+      </WordleProvider>
+    </AuthProvider>
   )
 }
 

@@ -73,6 +73,8 @@ exports.signin = async (req, res) => {
         message: "Invalid username or password!"
       })
     }
+
+    delete user.dataValues['password']
     const token = jwt.sign({user}, config.secret, {
       expiresIn: 86400 // 24 hours
     })
