@@ -5,11 +5,8 @@ const authContext = createContext()
 
 export const useAuthCtx = () => useContext(authContext)
 
-export const AuthProvider = ({ children }) => {
-  let wordleStorage = localStorage.getItem("wordleClone")
-  let token = wordleStorage ? wordleStorage.token : ''
-
-  const [username, setUsername] = useState(wordleStorage ? wordleStorage.username : '')
+export const AuthProvider = ({ children, storedUser }) => {
+  const [username, setUsername] = useState(storedUser ? storedUser.username : '')
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [redirect, setRedirect] = useState(false)
@@ -35,12 +32,8 @@ export const AuthProvider = ({ children }) => {
     } else {
       try {
         let res = await axios.post('/api/auth/signup', body)
-        const { username, accessToken } = res.data
-        let storageData = {
-          token: accessToken,
-          username: username
-        }
-        localStorage.setItem("wordleClone", JSON.stringify(storageData))
+        const { accessToken } = res.data
+        localStorage.setItem("wordleClone", accessToken)
       } catch (error) {
         console.log(error)
       }
@@ -53,12 +46,8 @@ export const AuthProvider = ({ children }) => {
 
     try {
       let res = await axios.post('/api/auth/signin', body)
-      const { username, accessToken } = res.data
-      let storageData = {
-        token: accessToken,
-        username: username
-      }
-      localStorage.setItem("wordleClone", JSON.stringify(storageData))
+      const { accessToken } = res.data
+      localStorage.setItem("wordleClone", accessToken)
       console.log('Logged In!')
     } catch (error) {
       console.log(error)
@@ -81,7 +70,6 @@ export const AuthProvider = ({ children }) => {
       passwordConfirm, 
       redirect,
       redirectPath,
-      token,
       setUsername,
       setPassword, 
       setPasswordConfirm,

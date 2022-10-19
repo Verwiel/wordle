@@ -6,7 +6,7 @@ const wordleContext = createContext()
 export const useWordleCtx = () => useContext(wordleContext)
 
 
-export const WordleProvider = ({ children }) => {
+export const WordleProvider = ({ children, storedUser }) => {
   // Location of keys on keyboard and their status (correct, present, or absent)
   const initialKeyboardKeys = [
     {letter: 'Q', status: '', row: 0}, {letter: 'W', status: '', row: 0}, {letter: 'E', status: '', row: 0}, {letter: 'R', status: '', row: 0}, {letter: 'T', status: '', row: 0}, {letter: 'Y', status: '', row: 0}, {letter: 'U', status: '', row: 0}, {letter: 'I', status: '', row: 0}, {letter: 'O', status: '', row: 0}, {letter: 'P', status: '', row: 0},
@@ -121,7 +121,23 @@ export const WordleProvider = ({ children }) => {
     }
   }
 
-  const evaluateGuessedWord = ( guessedWord ) => {
+  const createGameRecord = async (status) => {
+    let gamebody = {
+      outcome: status,
+      guesses: 1,
+      wordLength: wordLength,
+      userId: storedUser.id
+    } 
+
+    try {
+      let res = await axios.post('/submit-game', gamebody)
+      console.log(res.data)
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
+  const evaluateGuessedWord = async ( guessedWord ) => {
     const evaluations = wordEvaluations
     const randomWordArray = randomWord.split('')
     const guessedWordArray = guessedWord.split('')
@@ -129,6 +145,7 @@ export const WordleProvider = ({ children }) => {
     // if the word is correct
     if(randomWord === guessedWord){
       evaluations.push(Array(wordLength).fill('correct'))
+      createGameRecord('win')
       setWordEvaluations(evaluations)
       setGameStatus("COMPLETE")
       setShowingGameOver(true)
@@ -201,7 +218,7 @@ export const WordleProvider = ({ children }) => {
     }
   }
 
-  // console.log(randomWord)
+  console.log(randomWord)
 
   return (
     <wordleContext.Provider value={{
