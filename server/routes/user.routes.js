@@ -10,8 +10,8 @@ module.exports = function(app) {
     next()
   })
 
-  app.get("/get-streak", controller.getUserStreak)
-  app.put("/update-streak", controller.updateUserStreak)
+  app.get("/get-streak/:id", controller.getUserStreak)
+  app.put("/update-streak/:id", controller.updateUserStreak)
   app.get("/api/test/all", controller.allAccess)
 
   app.get(

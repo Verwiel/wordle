@@ -5,11 +5,15 @@ import Keyboard from '../components/game/Keyboard'
 import GameOverPanel from '../components/game/GameOverPanel'
 
 const Homepage = () => {
-  const { showingGameOver, fetchRandomWord } = useWordleCtx()
+  const { showingGameOver, fetchRandomWord, getUserStreaks, randomWord } = useWordleCtx()
 
   useEffect(() => {
     fetchRandomWord()
   }, [])
+  
+  useEffect(() => {
+    getUserStreaks()
+  }, [randomWord])
   
   return (
     <main className='homepage'>

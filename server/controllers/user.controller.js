@@ -21,7 +21,7 @@ exports.getUserStreak = async (req, res) => {
   try {
     const user = await User.findOne({
       where: {
-        username: req.query.username
+        id: req.params.id
       }
     })
     res.status(200).send(user)
@@ -34,7 +34,7 @@ exports.updateUserStreak = async (req, res) => {
   try {
     const user = await User.update(req.body, {
       where: {
-        username: req.query.username
+        id: req.params.id
       }
     })
     res.status(200).send(user)

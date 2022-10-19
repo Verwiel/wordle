@@ -26,6 +26,8 @@ export const WordleProvider = ({ children, storedUser }) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(guessedWords.indexOf(''))
   const [showingGameOver, setShowingGameOver] = useState(false)
   const [keyboardKeys, setKeyboardKeys] = useState(initialKeyboardKeys)
+  const [currentStreak, setCurrentStreak] = useState(0)
+  const [maxStreak, setMaxStreak] = useState(0)
   // correct, absent, present, or blank
 
 
@@ -121,33 +123,51 @@ export const WordleProvider = ({ children, storedUser }) => {
     }
   }
 
-  const createGameRecord = async (status) => {
-    console.log(storedUser)
-    let currentStreak = 0
-    let maxStreak = storedUser.maxStreak
+  const getUserStreaks = async () => {
+    try {
+      let res = await axios.get(`/get-streak/${storedUser.id}`)
+      const { currentStreak, maxStreak } = res.data
+      setCurrentStreak(currentStreak)
+      setMaxStreak(maxStreak)
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
+  const createGameRecord = async (status, attempts) => {
+    let current = currentStreak
+    let max = maxStreak
     if(status === 'win'){
-      currentStreak = storedUser.currentStreak + 1
-      if(currentStreak > storedUser.maxStreak){
-        maxStreak = storedUser.maxStreak + 1
+      setGameStatus("COMPLETE")
+      setShowingGameOver(true)
+      current++
+      setCurrentStreak(current)
+      if(current > max){
+        max++
+        setMaxStreak(max)
       }
+    } else {
+      current = 0
+      setCurrentStreak(0)
+      setGameStatus("FINISHED")
+      setShowingGameOver(true)
     }
 
-    storedUser.currentStreak = currentStreak
-    storedUser.maxStreak = maxStreak
+    let gameData = {
+      outcome: status,
+      guesses: attempts,
+      wordLength: wordLength,
+      userId: storedUser.id
+    }
 
-    let body = {
-      gameData: {
-        outcome: status,
-        guesses: 1,
-        wordLength: wordLength,
-        userId: storedUser.id
-      },
-      userData: storedUser
-    } 
+    let userData = {
+      currentStreak: current,
+      maxStreak: max
+    }
 
     try {
-      let res = await axios.post('/submit-game', body)
-      console.log(res.data)
+      let userUpdate = await axios.put(`/update-streak/${storedUser.id}`, userData)
+      let gameCreation = await axios.post('/submit-game', gameData)
     } catch(err) {
       console.log(err)
     }
@@ -157,14 +177,12 @@ export const WordleProvider = ({ children, storedUser }) => {
     const evaluations = wordEvaluations
     const randomWordArray = randomWord.split('')
     const guessedWordArray = guessedWord.split('')
-
+    let attempts = evaluations.length + 1
     // if the word is correct
     if(randomWord === guessedWord){
       evaluations.push(Array(wordLength).fill('correct'))
-      createGameRecord('win')
       setWordEvaluations(evaluations)
-      setGameStatus("COMPLETE")
-      setShowingGameOver(true)
+      createGameRecord('win', attempts)
     } else {
       let baseEvaluations = Array(wordLength).fill('absent')
       let sharedLetters = guessedWordArray.filter(letter => randomWordArray.includes(letter));
@@ -228,13 +246,10 @@ export const WordleProvider = ({ children, storedUser }) => {
 
       // End the game if the max number of guesses has been reached
       if(currentWordIndex + 1 === numberOfGuesses){
-        setGameStatus("FINISHED")
-        setShowingGameOver(true)
+        createGameRecord('loss', attempts)
       }
     }
   }
-
-  console.log(randomWord)
 
   return (
     <wordleContext.Provider value={{
@@ -254,7 +269,8 @@ export const WordleProvider = ({ children, storedUser }) => {
       removeLetter,
       wordEvaluations,
       fetchRandomWord,
-      resetBoard
+      resetBoard,
+      getUserStreaks
     }}>
       {children}
     </wordleContext.Provider>

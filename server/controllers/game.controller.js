@@ -11,11 +11,8 @@ exports.getUsersGames = async (req, res) => {
 }
 
 exports.submitGame = async (req, res) => {
-  const { gameData, userData } = req.body
-  console.log(req.body)
   try {
-    const game = await Game.create(req.body.gameData)
-    const userUpdate = 
+    const game = await Game.create(req.body)
     res.status(200).send(game)
   } catch(err) {
     console.log(err)

@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import decode from 'jwt-decode'
 import { WordleProvider } from './context/WordleProvider'
 import { AuthProvider } from './context/AuthProvider'
