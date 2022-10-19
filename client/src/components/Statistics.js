@@ -28,14 +28,13 @@ const Statistics = () => {
     return Math.round((100 * partial) / total)
   }
 
-  const guessStructure = Array(6).fill('')
+  const guessStructure = [1, 2, 3, 4, 5, 6]
   const gamesPlayed = testData.length
   const gamesWon = testData.filter(game => game.outcome === 'win').length
   const winPercent = average(gamesWon, gamesPlayed)
   const guessArray = testData.map(({ guesses }) => guesses).filter(guess => guess !== null)
 
-  const distributionMap = guessStructure.map((position, i) => {
-    let number = i + 1
+  const distributionMap = guessStructure.map((number, i) => {
     let count = guessArray.filter(guess => guess === number).length
     let width = count > 0 ? `${average(count, guessArray.length)}%` : 'auto'
     return (
