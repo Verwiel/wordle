@@ -1,7 +1,8 @@
 module.exports = (sequelize, Sequelize) => {
   const Game = sequelize.define("games", {
     id: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
       primaryKey: true
     },
     // win - loss

@@ -122,15 +122,18 @@ export const WordleProvider = ({ children, storedUser }) => {
   }
 
   const createGameRecord = async (status) => {
-    let gamebody = {
-      outcome: status,
-      guesses: 1,
-      wordLength: wordLength,
-      userId: storedUser.id
+    let body = {
+      game: {
+        outcome: status,
+        guesses: 1,
+        wordLength: wordLength,
+        userId: storedUser.id
+      },
+      user: storedUser
     } 
 
     try {
-      let res = await axios.post('/submit-game', gamebody)
+      let res = await axios.post('/submit-game', body)
       console.log(res.data)
     } catch(err) {
       console.log(err)

@@ -33,17 +33,8 @@ db.user.belongsToMany(db.role, {
   otherKey: "roleId"
 })
 
-db.game.belongsToMany(db.user, {
-  through: "user_games",
-  foreignKey: "gameId",
-  otherKey: "userId"
-})
-
-db.user.belongsToMany(db.game, {
-  through: "user_games",
-  foreignKey: "userId",
-  otherKey: "gameId"
-})
+db.game.belongsTo(db.user)
+db.user.hasMany(db.game)
 
 db.ROLES = ["user", "admin", "moderator"]
 

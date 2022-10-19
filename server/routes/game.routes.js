@@ -11,5 +11,5 @@ module.exports = function(app) {
   })
 
   app.get("/games", controller.getUsersGames)
-  app.post("/new-game", controller.submitGame)
+  app.post("/submit-game", controller.submitGame)
 }

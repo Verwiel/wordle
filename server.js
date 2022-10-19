@@ -19,6 +19,7 @@ db.sequelize.sync()
 require('./server/routes/auth.routes')(app)
 require('./server/routes/user.routes')(app)
 require('./server/routes/word.routes')(app)
+require('./server/routes/game.routes')(app)
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

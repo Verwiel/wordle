@@ -73,7 +73,7 @@ exports.signin = async (req, res) => {
         message: "Invalid username or password!"
       })
     }
-    const token = jwt.sign({ id: user.id }, config.secret, {
+    const token = jwt.sign({user}, config.secret, {
       expiresIn: 86400 // 24 hours
     })
     const authorities = []
