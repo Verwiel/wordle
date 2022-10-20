@@ -1,7 +1,6 @@
 const db = require("../models")
 const Word = db.word
 
-
 exports.getRandomWord = async (req, res) => {
   try {
     let randomWord = await Word.findOne({ 

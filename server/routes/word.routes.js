@@ -1,9 +1,7 @@
 const { authJwt } = require("../middleware")
 const controller = require("../controllers/word.controller")
 
-
 module.exports = function(app) {
-  
   app.use(function(req, res, next) {
     res.header(
       "Access-Control-Allow-Headers",
@@ -16,7 +14,6 @@ module.exports = function(app) {
   app.get("/random-word", controller.getRandomWord)
   app.get("/check-word", controller.checkWordValidity)
 
-  // Below are all future state
   app.post(
     "/api/request-word",
     [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
