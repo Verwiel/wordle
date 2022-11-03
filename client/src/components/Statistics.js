@@ -17,6 +17,7 @@ const Statistics = () => {
   const gamesPlayed = usersGames.length
   const gamesWon = usersGames.filter(game => game.outcome === 'win').length
   const guessArray = usersGames.map(({ guesses }) => guesses).filter(guess => guess !== null)
+  const winPercent = average(gamesWon, gamesPlayed)
 
   const distributionMap = guessStructure.map((number, i) => {
     let count = guessArray.filter(guess => guess === number).length
@@ -40,7 +41,7 @@ const Statistics = () => {
           <p>Played</p>
         </span>
         <span>
-          <b>{average(gamesWon, gamesPlayed)}</b>
+          <b>{winPercent > 0 ? winPercent : 0}</b>
           <p>Win %</p>
         </span>
         <span>
