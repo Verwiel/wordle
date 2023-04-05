@@ -8,7 +8,15 @@ const sequelize = new Sequelize(
   {
     host: config.HOST,
     dialect: config.dialect,
-    logging: false
+    logging: false,
+    // idle_timeout: 7200
+    operatorsAliases: false,
+    pool: {
+      max: config.pool.max,
+      min: config.pool.min,
+      acquire: config.pool.acquire,
+      idle: config.pool.idle
+    }
   }
 )
 

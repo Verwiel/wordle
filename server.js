@@ -1,5 +1,6 @@
 const express = require("express")
-const path = require('path');
+const path = require('path')
+const bodyParser = require("body-parser")
 const cors = require("cors")
 const app = express()
 require('dotenv').config()
@@ -16,6 +17,12 @@ app.use(express.static(path.resolve(__dirname, './client/build')));
 
 const db = require("./server/models")
 db.sequelize.sync()
+  .then(() => {
+    console.log("Synced db.")
+  })
+  .catch((err) => {
+    console.log("Failed to sync db: " + err.message)
+  })
 
 // routes
 require('./server/routes/auth.routes')(app)
