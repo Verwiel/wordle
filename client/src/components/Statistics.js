@@ -1,13 +1,21 @@
 import { useEffect } from 'react'
+import { useAuthCtx } from '../context/AuthProvider'
 import { useWordleCtx } from '../context/WordleProvider'
 import ModalLoginLink from './ModalLoginLink'
 
 const Statistics = () => {
-  const { getUsersGames, usersGames, currentStreak, maxStreak } = useWordleCtx()
+  const { username } = useAuthCtx()
+  const { getUsersGames, usersGames, currentStreak, maxStreak, getLocalStats } = useWordleCtx()
 
   useEffect(() => {
-    getUsersGames()
-  }, [])
+    if(username){
+      getUsersGames()
+    } else {
+      getLocalStats()
+    }
+
+    console.log('first')
+  }, [username])
 
   const average = (partial, total) => {
     return Math.round((100 * partial) / total)

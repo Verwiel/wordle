@@ -10,8 +10,11 @@ import Modal from './components/Modal'
 
 function App() {
   const { modalOpen } = useUtilityCtx()
-  let storedToken = localStorage.getItem("wordleClone")
-  let decodedJwt = storedToken ? decode(storedToken) : ''
+  let storedToken = localStorage.getItem("wordleCloneToken")
+  let decodedJwt = ''
+  if(storedToken){
+    decodedJwt = decode(storedToken)
+  }
   
   return (
     <AuthProvider storedUser={decodedJwt.user} >

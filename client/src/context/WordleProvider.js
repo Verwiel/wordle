@@ -31,7 +31,6 @@ export const WordleProvider = ({ children, storedUser }) => {
   const [usersGames, setUsersGames] = useState([])
   // correct, absent, present, or blank
 
-
   const markKeyboardKey = (guessedWordArray) => {
     guessedWordArray.forEach((letter, i) => {
       let updatedKeys = keyboardKeys.map(key => {
@@ -124,66 +123,6 @@ export const WordleProvider = ({ children, storedUser }) => {
     }
   }
 
-  const getUserStreaks = async () => {
-    try {
-      let res = await axios.get(`/get-streak/${storedUser.id}`)
-      const { currentStreak, maxStreak } = res.data
-      setCurrentStreak(currentStreak)
-      setMaxStreak(maxStreak)
-    } catch(err) {
-      console.log(err)
-    }
-  }
-
-  const getUsersGames = async () => {
-    try {
-      let res = await axios.get(`/games/${storedUser.id}`)
-      setUsersGames(res.data)
-    } catch(err) {
-      console.log(err)
-    }
-  }
-
-
-  const createGameRecord = async (status, attempts) => {
-    let current = currentStreak
-    let max = maxStreak
-    if(status === 'win'){
-      setGameStatus("COMPLETE")
-      setShowingGameOver(true)
-      current++
-      setCurrentStreak(current)
-      if(current > max){
-        max++
-        setMaxStreak(max)
-      }
-    } else {
-      current = 0
-      setCurrentStreak(0)
-      setGameStatus("FINISHED")
-      setShowingGameOver(true)
-    }
-
-    let gameData = {
-      outcome: status,
-      guesses: attempts,
-      wordLength: wordLength,
-      userId: storedUser.id
-    }
-
-    let userData = {
-      currentStreak: current,
-      maxStreak: max
-    }
-
-    try {
-      let userUpdate = await axios.put(`/update-streak/${storedUser.id}`, userData)
-      let gameCreation = await axios.post('/submit-game', gameData)
-    } catch(err) {
-      console.log(err)
-    }
-  }
-
   const evaluateGuessedWord = async ( guessedWord ) => {
     const evaluations = wordEvaluations
     const randomWordArray = randomWord.split('')
@@ -262,6 +201,121 @@ export const WordleProvider = ({ children, storedUser }) => {
     }
   }
 
+  // Store info locally if no user is logged in
+  const getLocalStats = async () => {
+    let streakStorage = localStorage.getItem("wordleCloneLocalStreak")
+    let gamesStorage = localStorage.getItem("wordleCloneLocalGames")
+    let streaks = {currentStreak:0,maxStreak:0}
+    let games = []
+
+    if(streakStorage){
+      streaks = JSON.parse(streakStorage)
+    } else {
+      localStorage.setItem("wordleCloneLocalStreak", JSON.stringify(streaks))
+    }
+
+    if(gamesStorage){
+      games = JSON.parse(gamesStorage)
+    } else {
+      localStorage.setItem("wordleCloneLocalGames", JSON.stringify(games))
+    }
+
+    setCurrentStreak(streaks.currentStreak)
+    setMaxStreak(streaks.maxStreak)
+    setUsersGames(games)
+  }
+
+  const createLocalGameRecord = async (userData, gameData) => {
+    let gameArray = usersGames
+    gameArray.push(gameData)
+
+    let updateStreak = {
+      currentStreak: userData.currentStreak,
+      maxStreak: userData.maxStreak
+    }
+  
+    localStorage.setItem("wordleCloneLocalStreak", JSON.stringify(updateStreak))
+    localStorage.setItem("wordleCloneLocalGames", JSON.stringify(gameArray))
+  }
+
+
+  // Below is used if there is a user logged in
+  const getUserStreaks = async () => {
+    try {
+      let res = await axios.get(`/get-streak/${storedUser.id}`)
+      const { currentStreak, maxStreak } = res.data
+      setCurrentStreak(currentStreak)
+      setMaxStreak(maxStreak)
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
+  const getUsersGames = async () => {
+    try {
+      let res = await axios.get(`/games/${storedUser.id}`)
+      setUsersGames(res.data)
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
+  const createUsersGameRecord = async (userData, gameData) => {
+    try {
+      await axios.put(`/update-streak/${storedUser.id}`, userData)
+      await axios.post('/submit-game', gameData)
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
+  const createGameRecord = async (status, attempts) => {
+    let current = currentStreak
+    let max = maxStreak
+    if(status === 'win'){
+      setGameStatus("COMPLETE")
+      setShowingGameOver(true)
+      current++
+      setCurrentStreak(current)
+      if(current > max){
+        max++
+        setMaxStreak(max)
+      }
+    } else {
+      current = 0
+      setCurrentStreak(0)
+      setGameStatus("FINISHED")
+      setShowingGameOver(true)
+    }
+    
+    if(storedUser !== undefined){
+      let gameData = {
+        outcome: status,
+        guesses: attempts,
+        wordLength: wordLength,
+        userId: storedUser.id
+      }
+  
+      let userData = {
+        currentStreak: current,
+        maxStreak: max
+      }
+
+      await createUsersGameRecord(userData, gameData)
+    } else {
+      let gameData = {
+        outcome: status,
+        guesses: attempts,
+      }
+
+      let userData = {
+        currentStreak: current,
+        maxStreak: max
+      }
+
+      createLocalGameRecord(userData, gameData)
+    }
+  }
 
   return (
     <wordleContext.Provider value={{
@@ -286,7 +340,8 @@ export const WordleProvider = ({ children, storedUser }) => {
       getUsersGames,
       usersGames,
       currentStreak,
-      maxStreak
+      maxStreak,
+      getLocalStats
     }}>
       {children}
     </wordleContext.Provider>

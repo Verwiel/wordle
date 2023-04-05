@@ -33,7 +33,7 @@ export const AuthProvider = ({ children, storedUser }) => {
       try {
         let res = await axios.post('/api/auth/signup', body)
         const { accessToken } = res.data
-        localStorage.setItem("wordleClone", accessToken)
+        localStorage.setItem("wordleCloneToken", accessToken)
       } catch (error) {
         console.log(error)
       }
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children, storedUser }) => {
     try {
       let res = await axios.post('/api/auth/signin', body)
       const { accessToken } = res.data
-      localStorage.setItem("wordleClone", accessToken)
+      localStorage.setItem("wordleCloneToken", accessToken)
       console.log('Logged In!')
     } catch (error) {
       console.log(error)
