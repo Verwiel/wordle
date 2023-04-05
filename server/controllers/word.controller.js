@@ -18,7 +18,7 @@ exports.checkWordValidity = async (req, res) => {
   try {
     let word = await Word.findOne({ 
       where: { 
-        word: req.query.word,
+        word: req.query.word.toLowerCase(),
         length: req.query.length
       } 
     })
