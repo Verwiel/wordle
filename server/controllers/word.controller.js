@@ -5,7 +5,8 @@ exports.getRandomWord = async (req, res) => {
   try {
     let randomWord = await Word.findOne({ 
       where: { length: req.query.length },
-      order: [ db.Sequelize.literal('RAND()') ]
+      order: [ db.Sequelize.literal('RANDOM()') ] // used in prod
+      // order: [ db.Sequelize.literal('RAND()') ] // used locally
     })
     res.status(200).send(randomWord)
   } catch(err) {
