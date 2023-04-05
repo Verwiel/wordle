@@ -37,15 +37,39 @@ exports.signup = async (req, res) => {
         }
       })
       .then(roles => {
-        user.setRoles(roles).then(() => {
-          res.send({ message: "User was registered successfully!" })
-        })
+        user.setRoles(roles)
       })
     } else {
-      // user role = 1
-      user.setRoles([1]).then(() => {
-        res.send({ message: "User was registered successfully!" })
+      user.setRoles([1])
+    }
+    // sign in
+    try {
+      let user = await User.findOne({
+        where: {
+          username: req.body.username
+        }
       })
+      if (!user) {
+        return res.status(404).send({ message: "Invalid username or password!" })
+      }
+      delete user.dataValues['password']
+      const token = jwt.sign({user}, config.secret, {
+        expiresIn: 86400 // 24 hours
+      })
+      const authorities = []
+      user.getRoles().then(roles => {
+        for (let i = 0; i < roles.length; i++) {
+          authorities.push("ROLE_" + roles[i].name.toUpperCase())
+        }
+        res.status(200).send({
+          id: user.id,
+          username: user.username,
+          roles: authorities,
+          accessToken: token
+        })
+      })
+    } catch (err) {
+      res.status(500).send({ message: err.message })
     }
   } catch(err) {
     res.status(500).send({ message: err.message })

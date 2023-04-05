@@ -11,7 +11,6 @@ const { Sequelize } = require("sequelize")
 //     dialect: config.dialect,
 //     logging: false,
 //     // idle_timeout: 7200
-//     operatorsAliases: false,
 //     ssl: true,
 //     pool: {
 //       max: config.pool.max,
