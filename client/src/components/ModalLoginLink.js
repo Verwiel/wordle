@@ -5,8 +5,14 @@ import { useUtilityCtx } from '../context/UtilityProvider'
 import { useAuthCtx } from '../context/AuthProvider'
 
 const ModalLoginLink = () => {
-  const { username } = useAuthCtx()
+  const { username, setUsername } = useAuthCtx()
   const { toggleModal } = useUtilityCtx()
+
+  const changeAccount = () => {
+    setUsername('')
+    localStorage.removeItem("wordleCloneToken")
+    toggleModal('close', '')
+  }
   
   return (
     <aside className='modal-body-login'>
@@ -19,7 +25,7 @@ const ModalLoginLink = () => {
       :
       <span>
         Currently logged in as {username}.{' '}
-        <Link to='/portal' onClick={() => toggleModal('close', '')}>Want to change accounts?</Link>
+        <Link to='/portal' onClick={changeAccount}>Want to change accounts?</Link>
       </span>
       }
     </aside>

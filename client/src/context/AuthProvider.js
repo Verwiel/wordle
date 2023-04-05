@@ -39,6 +39,7 @@ export const AuthProvider = ({ children, storedUser }) => {
         navigate("/")
       } catch (error) {
         console.log(error)
+        alert('An error occurred when trying to create your account.')
       }
     }
   }
@@ -54,6 +55,7 @@ export const AuthProvider = ({ children, storedUser }) => {
       navigate("/")
     } catch (error) {
       console.log(error)
+      alert('An error occurred when trying to log into your account.')
     }
   }
 
