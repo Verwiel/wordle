@@ -1,4 +1,5 @@
 import { createContext, useState, useContext } from 'react'
+import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 
 const authContext = createContext()
@@ -6,6 +7,7 @@ const authContext = createContext()
 export const useAuthCtx = () => useContext(authContext)
 
 export const AuthProvider = ({ children, storedUser }) => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState(storedUser ? storedUser.username : '')
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
@@ -34,6 +36,7 @@ export const AuthProvider = ({ children, storedUser }) => {
         let res = await axios.post('/api/auth/signup', body)
         const { accessToken } = res.data
         localStorage.setItem("wordleCloneToken", accessToken)
+        navigate("/")
       } catch (error) {
         console.log(error)
       }
@@ -48,7 +51,7 @@ export const AuthProvider = ({ children, storedUser }) => {
       let res = await axios.post('/api/auth/signin', body)
       const { accessToken } = res.data
       localStorage.setItem("wordleCloneToken", accessToken)
-      console.log('Logged In!')
+      navigate("/")
     } catch (error) {
       console.log(error)
     }

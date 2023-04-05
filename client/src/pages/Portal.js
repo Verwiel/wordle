@@ -2,7 +2,7 @@ import { useAuthCtx } from "../context/AuthProvider"
 import { Navigate, Link } from "react-router-dom"
 
 const Portal = () => {
-  const { redirect, redirectPath, setUsername, checkLoginOrRegister } = useAuthCtx()
+  const { redirect, redirectPath, setUsername, checkLoginOrRegister, username } = useAuthCtx()
 
   return (
     <main className='portal'>
@@ -29,19 +29,8 @@ const Portal = () => {
         <button>Continue</button>
       </form>
 
-      {/* <aside className='portal-or'>
-        <hr />
-        <p>or</p>
-      </aside>
-
-      <section className='portal-sso'>
-        <button>Continue with Google</button>
-        <button>Continue with Facebook</button>
-        <button>Continue with Apple</button>
-      </section> */}
-
       <p>
-        <small>This app was developed as a side project for my portfolio. Since it wont be maintained forever, I figured it would be irresponsible to store any of your sensetive data so only a username is used to sign up. By omitting the email address there isnt a way to verify a password reset so I removed the ability.</small>
+        <small>This app was developed as a side project for my portfolio. Since it won't be maintained forever, I figured it would be irresponsible to store any of your sensitive data so only a username is used to sign up. By omitting the email address there isn't a way to verify a password reset so I removed the ability.</small>
       </p>
 
       <aside className='portal-return'>

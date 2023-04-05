@@ -41,8 +41,6 @@ const Login = () => {
           />
         </label>
 
-        {/* <p>Forgot your password?</p> */}
-
         <button>Log In</button>
       </form>
 
