@@ -16,10 +16,9 @@ export const WordleProvider = ({ children, storedUser }) => {
 
   const numberOfGuesses = 6
   let initialGuessedWordsArray = Array(numberOfGuesses).fill('')
-  const wordLength = 5
+  const [wordLength, setWordLength] = useState(5)
   const [gameStatus, setGameStatus] = useState("IN PROGRESS")
   const [randomWord, setRandomWord] = useState('')
-  const [wordDescription, setWordDescription] = useState('test')
   const [keyboardValue, setKeyboardValue] = useState([])
   const [guessedWords, setGuessedWords] = useState(initialGuessedWordsArray)
   const [wordEvaluations, setWordEvaluations] = useState([])
@@ -53,6 +52,14 @@ export const WordleProvider = ({ children, storedUser }) => {
   
       setKeyboardKeys(updatedKeys)
     })
+  }
+
+  const toggleWordLength = () => {
+    if(wordLength === 5){
+      setWordLength(6)
+    } else {
+      setWordLength(5)
+    }
   }
 
   const fetchRandomWord = async () => {
@@ -317,10 +324,11 @@ export const WordleProvider = ({ children, storedUser }) => {
     }
   }
 
+  console.log(randomWord)
+
   return (
     <wordleContext.Provider value={{
       keyboardKeys,
-      wordDescription,
       showingGameOver,
       numberOfGuesses,
       wordLength,
@@ -341,7 +349,8 @@ export const WordleProvider = ({ children, storedUser }) => {
       usersGames,
       currentStreak,
       maxStreak,
-      getLocalStats
+      getLocalStats,
+      toggleWordLength
     }}>
       {children}
     </wordleContext.Provider>

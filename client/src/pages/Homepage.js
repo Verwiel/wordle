@@ -7,11 +7,11 @@ import GameOverPanel from '../components/game/GameOverPanel'
 
 const Homepage = () => {
   const { username } = useAuthCtx
-  const { showingGameOver, fetchRandomWord, getUserStreaks, randomWord, getLocalStats } = useWordleCtx()
+  const { showingGameOver, fetchRandomWord, getUserStreaks, randomWord, getLocalStats, wordLength } = useWordleCtx()
 
   useEffect(() => {
     fetchRandomWord()
-  }, [])
+  }, [wordLength])
   
   useEffect(() => {
     if(username){

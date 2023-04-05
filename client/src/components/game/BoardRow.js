@@ -16,7 +16,7 @@ const BoardRow = ({ rowNumber }) => {
   ))
 
   return (
-    <div className='board-row'>
+    <div className='board-row' style={{gridTemplateColumns: `repeat(${wordLength}, 1fr)`}}>
       {boardTileMap}
     </div>
   )

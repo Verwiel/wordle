@@ -11,7 +11,8 @@ const GameOverPanel = () => {
 
       <section>
         <p><b>Word:</b> {randomWord}</p>
-        <p><b>Definition:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</p>
+        <p>View the definition on <a href={`https://www.dictionary.com/browse/${randomWord}`} target="_blank" rel="noopener noreferrer">Dictionary.com</a></p>
+        
       </section>
 
       <section>

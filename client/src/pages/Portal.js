@@ -2,7 +2,7 @@ import { useAuthCtx } from "../context/AuthProvider"
 import { Navigate, Link } from "react-router-dom"
 
 const Portal = () => {
-  const { redirect, redirectPath, setUsername, checkLoginOrRegister, username } = useAuthCtx()
+  const { redirect, redirectPath, setUsername, checkLoginOrRegister } = useAuthCtx()
 
   return (
     <main className='portal'>
