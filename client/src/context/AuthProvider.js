@@ -59,6 +59,11 @@ export const AuthProvider = ({ children, storedUser }) => {
     }
   }
 
+  const logout = () => {
+    setUsername('')
+    localStorage.removeItem("wordleCloneToken")
+  }
+
   const getUserFromUrl = (username) => {
     setUsername(username)
   }
@@ -81,6 +86,7 @@ export const AuthProvider = ({ children, storedUser }) => {
       checkLoginOrRegister,
       createAccount,
       login,
+      logout,
       getUserFromUrl,
       clearRedirect
     }}>
