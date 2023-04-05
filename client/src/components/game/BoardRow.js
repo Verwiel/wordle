@@ -8,6 +8,7 @@ const BoardRow = ({ rowNumber }) => {
   const boardTileMap = [...Array(wordLength).keys()].map((tile, i) => (
     <Tile 
       key={tile} 
+      // eslint-disable-next-line
       guessedWord={currentWordIndex == rowNumber ? keyboardValue: guessedWords[rowNumber]} 
       evaluations={wordEvaluations[rowNumber] === undefined ? [] : wordEvaluations[rowNumber]} 
       rowIndex={rowNumber} 

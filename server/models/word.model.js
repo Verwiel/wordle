@@ -7,9 +7,6 @@ module.exports = (sequelize, Sequelize) => {
     length: {
       type: Sequelize.INTEGER
     },
-    definition: {
-      type: Sequelize.STRING
-    },
     approved: {
       type: Sequelize.BOOLEAN,
       defaultValue: false

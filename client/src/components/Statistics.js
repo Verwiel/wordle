@@ -14,7 +14,7 @@ const Statistics = () => {
       getLocalStats()
     }
 
-    console.log('first')
+    // eslint-disable-next-line
   }, [username])
 
   const average = (partial, total) => {

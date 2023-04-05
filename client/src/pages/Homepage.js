@@ -11,6 +11,7 @@ const Homepage = () => {
 
   useEffect(() => {
     fetchRandomWord()
+    // eslint-disable-next-line
   }, [wordLength])
   
   useEffect(() => {
@@ -19,6 +20,7 @@ const Homepage = () => {
     } else {
       getLocalStats()
     }
+    // eslint-disable-next-line
   }, [randomWord, username])
   
   return (
