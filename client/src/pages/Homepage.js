@@ -6,7 +6,7 @@ import Keyboard from '../components/game/Keyboard'
 import GameOverPanel from '../components/game/GameOverPanel'
 
 const Homepage = () => {
-  const { username } = useAuthCtx
+  const { username } = useAuthCtx()
   const { showingGameOver, fetchRandomWord, getUserStreaks, randomWord, getLocalStats, wordLength } = useWordleCtx()
 
   useEffect(() => {

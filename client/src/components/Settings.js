@@ -10,22 +10,25 @@ const Settings = () => {
   const { toggleWordLength, wordLength } = useWordleCtx()
 
   return (
-    <article>
+    <article className='modal-body-settings'>
       <header>
         <h2>Settings</h2>
       </header>
       
       <section>
+        <div>
+          Word Length: 
+          <select name="wordLengthSelect" defaultValue={wordLength} onChange={(e) => toggleWordLength(e)}>
+            <option value={5}>5</option>
+            <option value={6}>6</option>
+          </select>
+        </div>
+        
         {username ?
           <button onClick={logout}>Log out</button>
           :
           <Link to='/portal' onClick={() => toggleModal('close', '')}>Log in or create an account</Link>  
         }
-        <div>
-          Current word length is {wordLength}
-          <button onClick={toggleWordLength}>Set to {wordLength === 5 ? 6 : 5}</button>
-        </div>
-        {/* <p>Reset Stats</p> */}
       </section>
     </article>
   )

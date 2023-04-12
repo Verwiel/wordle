@@ -54,12 +54,9 @@ export const WordleProvider = ({ children, storedUser }) => {
     })
   }
 
-  const toggleWordLength = () => {
-    if(wordLength === 5){
-      setWordLength(6)
-    } else {
-      setWordLength(5)
-    }
+  const toggleWordLength = (e) => {
+    const { value } = e.target
+    setWordLength(+value)
   }
 
   const fetchRandomWord = async () => {
@@ -67,7 +64,6 @@ export const WordleProvider = ({ children, storedUser }) => {
       let res = await axios.get(`random-word?length=${wordLength}`)
       let word = res.data.word
       setRandomWord(word.toUpperCase())
-      // setWordDescription('')
     } catch(err) {
       console.log(err)
     }
@@ -323,8 +319,6 @@ export const WordleProvider = ({ children, storedUser }) => {
       createLocalGameRecord(userData, gameData)
     }
   }
-
-  console.log(randomWord)
 
   return (
     <wordleContext.Provider value={{

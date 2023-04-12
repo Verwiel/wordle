@@ -48,6 +48,28 @@
         color: $darkendGreen;
       }
     }
+    &-settings {
+      margin-bottom: 20px;
+      header {
+        h2 {
+          font-family: "nyt-karnakcondensed";
+          font-weight: 700;
+          font-size: 28px;
+          letter-spacing: 0;
+          line-height: 30px;
+          text-transform: none;
+          text-align: left;
+          margin-bottom: 20px;
+          margin-top: 0;
+        }
+      }
+      div {
+        margin-bottom: 10px;
+        select {
+          margin-left: 5px;
+        }
+      }
+    }
     &-help {
       header {
         h2 {

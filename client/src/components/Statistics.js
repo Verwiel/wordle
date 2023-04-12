@@ -13,7 +13,6 @@ const Statistics = () => {
     } else {
       getLocalStats()
     }
-
     // eslint-disable-next-line
   }, [username])
 
