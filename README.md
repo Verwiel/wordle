@@ -1,4 +1,4 @@
-# wordle
+# Wordle
 
 Rebuilding Wordle (https://www.nytimes.com/games/wordle/index.html) with some added features like the ability to play unlimited games in a day and trying 6 letter words.
 
