@@ -1,12 +1,13 @@
 const db = require("../models")
+const { nodeEnv } = require('../config/auth.config')
 const Word = db.word
 
 exports.getRandomWord = async (req, res) => {
+  let literalString = nodeEnv === 'development' ? 'RAND()' : 'RANDOM()'
   try {
     let randomWord = await Word.findOne({ 
       where: { length: req.query.length },
-      order: [ db.Sequelize.literal('RANDOM()') ] // used in prod
-      // order: [ db.Sequelize.literal('RAND()') ] // used locally
+      order: [ db.Sequelize.literal(literalString) ]
     })
     res.status(200).send(randomWord)
   } catch(err) {
