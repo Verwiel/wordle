@@ -1,34 +1,31 @@
 const config = require("../config/db.config.js")
-const { nodeEnv } = require('../config/auth.config')
+// const { nodeEnv } = require('../config/auth.config')
 const { Sequelize } = require("sequelize")
 
-let sequelize = nodeEnv === 'development' ? 
-  new Sequelize(
-    config.DB,
-    config.USER,
-    config.PASSWORD,
-    {
-      host: config.HOST,
-      dialect: config.dialect,
-      logging: false,
-      // idle_timeout: 7200
-      ssl: true,
-      pool: {
-        max: config.pool.max,
-        min: config.pool.min,
-        acquire: config.pool.acquire,
-        idle: config.pool.idle
-      },
-      dialectOptions: {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false
-        }
-      },
-    }
-  )
-  :
-  new Sequelize(config.DATABASE_URL)
+let sequelize = new Sequelize(
+  config.DB,
+  config.USER,
+  config.PASSWORD,
+  {
+    host: config.HOST,
+    dialect: config.dialect,
+    logging: false,
+    // idle_timeout: 7200
+    ssl: true,
+    pool: {
+      max: config.pool.max,
+      min: config.pool.min,
+      acquire: config.pool.acquire,
+      idle: config.pool.idle
+    },
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    },
+  }
+)
 
 const db = {}
 db.Sequelize = Sequelize

@@ -1,9 +1,9 @@
 const db = require("../models")
-const { nodeEnv } = require('../config/auth.config')
+// const { nodeEnv } = require('../config/auth.config')
 const Word = db.word
 
 exports.getRandomWord = async (req, res) => {
-  let literalString = nodeEnv === 'development' ? 'RANDOM()' : 'RANDOM()'
+  let literalString = 'RANDOM()'
   try {
     let randomWord = await Word.findOne({ 
       where: { length: req.query.length },
