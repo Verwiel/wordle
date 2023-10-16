@@ -1,8 +1,8 @@
 module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define("users", {
     id: {
-      type: Sequelize.UUID,
-      defaultValue: Sequelize.UUIDV4,
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
       primaryKey: true
     },
     username: {
